@@ -45,3 +45,5 @@ Jika proyek ini bermanfaat, dukung pengembang melalui [SociaBuzz](https://sociab
 ## Lisensi
 
 Kode sumber tersedia di bawah [MIT License](LICENSE). Nama dan logo Nusuk adalah milik pemegang hak masing-masing.
+
+Logo Nusuk pada situs digunakan hanya untuk identifikasi dan bersumber dari koleksi aset [Saudi Logos](https://salogos.org/logo/676). Seluruh hak merek tetap milik pemiliknya.
