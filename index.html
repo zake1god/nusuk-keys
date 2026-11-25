@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="An unofficial Nusuk Keys directory. Search, copy a key, and open Nusuk in one click."
+      content="Search and copy Nusuk Keys, then browse official Umrah and Zamzam winner announcements in one community directory."
     />
     <meta name="theme-color" content="#171510" />
     <meta property="og:title" content="Nusuk Keys" />
     <meta
       property="og:description"
-      content="Search and copy Nusuk Keys from public comments, then continue in the Nusuk app."
+      content="Search Nusuk Keys and browse published Umrah and Zamzam winners in one community directory."
     />
     <meta property="og:type" content="website" />
     <title>Nusuk Keys</title>
@@ -27,6 +27,7 @@
     />
     <link rel="stylesheet" href="styles.css" />
     <script src="keys.js" defer></script>
+    <script src="winners.js" defer></script>
     <script src="script.js" defer></script>
   </head>
   <body>
@@ -71,29 +72,41 @@
           <span class="meta-separator" aria-hidden="true"></span>
           <span>Last updated: November 25, 2026</span>
         </div>
-        <p class="hero__byline">
-          Created by <strong>Zaki Zarkasih Al Mustafa</strong>
-          <a
-            class="support-icon"
-            href="https://sociabuzz.com/zakezrk/tribe"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Support Zaki on SociaBuzz"
-            title="Support this project"
-          >
-            <svg viewBox="0 0 32 32" aria-hidden="true">
-              <path d="M6 9.5 11 5h15v21H6V9.5Z" />
-              <path class="support-icon__line" d="M6 13.5h20M11 5v4.5H6" />
-              <path class="support-icon__door" d="M19 17h4v9h-4z" />
-            </svg>
-          </a>
-        </p>
+        <div class="hero__byline">
+          <span>Created by <strong>Zaki Zarkasih Al Mustafa</strong></span>
+          <div class="support-links" aria-label="Support this project">
+            <a
+              class="support-link"
+              href="https://sociabuzz.com/zakezrk/tribe"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg viewBox="0 0 32 32" aria-hidden="true">
+                <path d="M6 9.5 11 5h15v21H6V9.5Z" />
+                <path class="support-icon__line" d="M6 13.5h20M11 5v4.5H6" />
+                <path class="support-icon__door" d="M19 17h4v9h-4z" />
+              </svg>
+              <span>SociaBuzz</span>
+            </a>
+            <a
+              class="support-link"
+              href="https://ko-fi.com/zake"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg viewBox="0 0 32 32" aria-hidden="true">
+                <path class="support-icon__cup" d="M6 9h18v8a8 8 0 0 1-8 8h-2a8 8 0 0 1-8-8V9Z" />
+                <path class="support-icon__line" d="M24 12h2a3 3 0 0 1 0 6h-2M11 14c1-2 4-2 5 0 1-2 4-2 5 0 0 3-5 6-5 6s-5-3-5-6Z" />
+              </svg>
+              <span>Ko-fi</span>
+            </a>
+          </div>
+        </div>
       </section>
 
       <nav class="content-menu" aria-label="Page sections">
         <a href="#keys">Nusuk Keys</a>
-        <a href="#umrah-winners">Umrah Winners</a>
-        <a href="#zamzam-winners">Daily Zamzam Winners</a>
+        <a href="#winners">Official Winners</a>
       </nav>
 
       <section id="keys" class="keys-section" aria-labelledby="keys-title">
@@ -121,31 +134,46 @@
         <nav id="pagination" class="pagination" aria-label="Key result pages"></nav>
       </section>
 
-      <section class="winners-section" aria-labelledby="winners-title">
+      <section id="winners" class="winners-section" aria-labelledby="winners-title">
         <div class="winners-section__heading">
-          <p class="section-kicker">Winner directory</p>
-          <h2 id="winners-title">Umrah &amp; Zamzam Winners</h2>
+          <p class="section-kicker">Official winner directory</p>
+          <h2 id="winners-title">24 Days of Nusuk Winners</h2>
           <p>
-            This community tracker covers the campaign's <strong>50 days only</strong>.
-            Winner names will be added after official results are available.
+            Names below were published by the official <strong>@mynusuk</strong>
+            account through November 24, 2026: 24 Umrah winners and 240 Zamzam
+            winners. The complete campaign runs for 50 days.
           </p>
+          <a
+            class="winner-source-link"
+            href="https://www.instagram.com/mynusuk/?hl=en"
+            target="_blank"
+            rel="noopener noreferrer"
+          >View official @mynusuk announcements ↗</a>
         </div>
-        <div class="winner-lists">
-          <article id="umrah-winners" class="winner-list-card">
-            <div class="winner-list-card__icon" aria-hidden="true">01</div>
-            <p class="section-kicker">Grand prize</p>
-            <h3>Umrah Winners</h3>
-            <p>Official Umrah winner announcements will be listed here.</p>
-            <div class="winner-list-card__empty">No verified winners listed yet.</div>
-          </article>
-          <article id="zamzam-winners" class="winner-list-card">
-            <div class="winner-list-card__icon" aria-hidden="true">50</div>
-            <p class="section-kicker">Daily prize</p>
-            <h3>Daily Zamzam Winners</h3>
-            <p>One place for verified daily Zamzam winners across all 50 campaign days.</p>
-            <div class="winner-list-card__empty">No verified winners listed yet.</div>
-          </article>
+        <div class="winner-stats" aria-label="Published winner totals">
+          <div><strong>24</strong><span>Umrah winners</span></div>
+          <div><strong>240</strong><span>Zamzam winners</span></div>
+          <div><strong>264</strong><span>Published names</span></div>
         </div>
+        <div class="winner-toolbar">
+          <label class="search-box" for="winner-search">
+            <span aria-hidden="true">⌕</span>
+            <input
+              id="winner-search"
+              type="search"
+              placeholder="Search winner name, country, or day"
+              autocomplete="off"
+              spellcheck="false"
+            />
+          </label>
+          <div class="winner-tabs" role="group" aria-label="Filter winner type">
+            <button class="winner-tab is-active" type="button" data-winner-filter="all">All</button>
+            <button class="winner-tab" type="button" data-winner-filter="umrah">Umrah</button>
+            <button class="winner-tab" type="button" data-winner-filter="zamzam">Zamzam</button>
+          </div>
+        </div>
+        <p id="winner-result-count" class="winner-result-count"></p>
+        <div id="winner-days" class="winner-days"></div>
       </section>
 
       <section class="how-it-works" aria-labelledby="how-title">
@@ -189,7 +217,10 @@
           destination is the Nusuk app or the official
           <a href="https://www.nusuk.sa/" target="_blank" rel="noopener noreferrer">nusuk.sa</a>.
           If this project helps you,
-          <a href="https://sociabuzz.com/zakezrk/tribe" target="_blank" rel="noopener noreferrer">support its creator on SociaBuzz</a>.
+          support its creator through
+          <a href="https://sociabuzz.com/zakezrk/tribe" target="_blank" rel="noopener noreferrer">SociaBuzz</a>
+          or
+          <a href="https://ko-fi.com/zake" target="_blank" rel="noopener noreferrer">Ko-fi</a>.
         </p>
       </aside>
     </main>
@@ -204,7 +235,12 @@
           href="https://sociabuzz.com/zakezrk/tribe"
           target="_blank"
           rel="noopener noreferrer"
-        >Support me ↗</a>
+        >SociaBuzz ↗</a>
+        <a
+          href="https://ko-fi.com/zake"
+          target="_blank"
+          rel="noopener noreferrer"
+        >Ko-fi ↗</a>
       </div>
     </footer>
 

@@ -10,6 +10,7 @@ const allKeys = [
   ),
 ];
 const keyIndex = new Map(allKeys.map((key, index) => [key, index]));
+const officialWinnerDays = Array.isArray(window.NUSUK_WINNERS) ? window.NUSUK_WINNERS : [];
 
 const keysSection = document.querySelector("#keys");
 const keysGrid = document.querySelector("#keys-grid");
@@ -17,11 +18,16 @@ const keyCount = document.querySelector("#key-count");
 const resultCount = document.querySelector("#result-count");
 const searchInput = document.querySelector("#key-search");
 const pagination = document.querySelector("#pagination");
+const winnerDays = document.querySelector("#winner-days");
+const winnerSearch = document.querySelector("#winner-search");
+const winnerResultCount = document.querySelector("#winner-result-count");
+const winnerTabs = [...document.querySelectorAll("[data-winner-filter]")];
 const toast = document.querySelector("#toast");
 
 const initialPage = Number.parseInt(new URLSearchParams(window.location.search).get("page"), 10);
 let filteredKeys = allKeys;
 let currentPage = Number.isFinite(initialPage) && initialPage > 0 ? initialPage : 1;
+let winnerFilter = "all";
 let toastTimer;
 
 function showToast(message) {
@@ -197,6 +203,88 @@ function renderKeys({ scroll = false, updateUrl = false } = {}) {
   if (scroll) keysSection.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function createWinnerDayCard(day) {
+  const showUmrah = winnerFilter !== "zamzam";
+  const showZamzam = winnerFilter !== "umrah";
+  const article = document.createElement("article");
+  article.className = "winner-day-card";
+
+  const umrahSection = showUmrah
+    ? `
+      <section class="winner-day-card__umrah" aria-label="Umrah winner">
+        <p class="winner-card-label">Umrah winner <span>No. ${day.day}</span></p>
+        <h3 dir="auto">${escapeHtml(day.umrah[0])}</h3>
+        <p class="winner-country">${escapeHtml(day.umrah[1])}</p>
+      </section>
+    `
+    : "";
+
+  const zamzamSection = showZamzam
+    ? `
+      <section class="winner-day-card__zamzam" aria-label="Zamzam winners">
+        <p class="winner-card-label">Zamzam winners <span>10 names</span></p>
+        <ol>
+          ${day.zamzam.map((name) => `<li><span dir="auto">${escapeHtml(name)}</span></li>`).join("")}
+        </ol>
+      </section>
+    `
+    : "";
+
+  article.innerHTML = `
+    <header class="winner-day-card__header">
+      <span>Day ${day.day}</span>
+      <time datetime="2026-11-${String(day.day).padStart(2, "0")}">${escapeHtml(day.date)}, 2026</time>
+    </header>
+    <div class="winner-day-card__content ${showUmrah && showZamzam ? "" : "is-single"}">
+      ${umrahSection}
+      ${zamzamSection}
+    </div>
+    <a class="winner-day-card__source" href="https://www.instagram.com/mynusuk/?hl=en" target="_blank" rel="noopener noreferrer">
+      Official source: @mynusuk ↗
+    </a>
+  `;
+
+  return article;
+}
+
+function dayMatchesWinnerSearch(day, query) {
+  if (!query) return true;
+
+  const values = [day.day, day.date];
+  if (winnerFilter !== "zamzam") values.push(...day.umrah);
+  if (winnerFilter !== "umrah") values.push(...day.zamzam);
+  return values.some((value) => String(value).toLocaleLowerCase().includes(query));
+}
+
+function renderWinners() {
+  const query = winnerSearch.value.trim().toLocaleLowerCase();
+  const matchingDays = officialWinnerDays.filter((day) => dayMatchesWinnerSearch(day, query));
+  winnerDays.replaceChildren();
+
+  if (matchingDays.length === 0) {
+    const emptyState = document.createElement("p");
+    emptyState.className = "empty-state";
+    emptyState.textContent = "No published winner matches this search.";
+    winnerDays.appendChild(emptyState);
+  } else {
+    const fragment = document.createDocumentFragment();
+    matchingDays.forEach((day) => fragment.appendChild(createWinnerDayCard(day)));
+    winnerDays.appendChild(fragment);
+  }
+
+  const label = matchingDays.length === 1 ? "daily result" : "daily results";
+  winnerResultCount.textContent = `${matchingDays.length} ${label} shown · Official results through November 24, 2026`;
+}
+
 searchInput.addEventListener("input", () => {
   const query = searchInput.value.trim().toLowerCase();
   filteredKeys = query
@@ -204,6 +292,16 @@ searchInput.addEventListener("input", () => {
     : allKeys;
   currentPage = 1;
   renderKeys({ updateUrl: true });
+});
+
+winnerSearch.addEventListener("input", renderWinners);
+
+winnerTabs.forEach((tab) => {
+  tab.addEventListener("click", () => {
+    winnerFilter = tab.dataset.winnerFilter;
+    winnerTabs.forEach((item) => item.classList.toggle("is-active", item === tab));
+    renderWinners();
+  });
 });
 
 window.addEventListener("popstate", () => {
@@ -214,3 +312,4 @@ window.addEventListener("popstate", () => {
 
 keyCount.textContent = `${allKeys.length.toLocaleString("en-US")} unique keys available`;
 renderKeys({ updateUrl: true });
+renderWinners();
