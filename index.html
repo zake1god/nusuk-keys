@@ -1,17 +1,17 @@
 <!doctype html>
-<html lang="id">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Kumpulan Nusuk Keys unofficial. Cari, salin key, dan buka aplikasi Nusuk dalam satu klik."
+      content="An unofficial Nusuk Keys directory. Search, copy a key, and open Nusuk in one click."
     />
     <meta name="theme-color" content="#171510" />
     <meta property="og:title" content="Nusuk Keys" />
     <meta
       property="og:description"
-      content="Cari dan salin Nusuk Keys dari komentar publik, lalu lanjutkan ke aplikasi Nusuk."
+      content="Search and copy Nusuk Keys from public comments, then continue in the Nusuk app."
     />
     <meta property="og:type" content="website" />
     <title>Nusuk Keys</title>
@@ -34,11 +34,11 @@
     <div class="page-glow page-glow--two" aria-hidden="true"></div>
 
     <header class="site-header">
-      <a class="brand" href="#top" aria-label="Nusuk Keys - beranda">
+      <a class="brand" href="#top" aria-label="Nusuk Keys home">
         <img
           class="brand__logo"
           src="assets/nusuk-logo.png"
-          alt="Logo Nusuk"
+          alt="Nusuk logo"
           width="160"
           height="80"
         />
@@ -59,32 +59,49 @@
 
     <main id="top">
       <section class="hero" aria-labelledby="hero-title">
-        <p class="eyebrow"><span></span> Unofficial community project</p>
-        <h1 id="hero-title">Nusuk Keys, <em>siap disalin.</em></h1>
+        <p class="eyebrow">Unofficial community project</p>
+        <h1 id="hero-title">Nusuk Keys, <em>ready to copy.</em></h1>
         <p class="hero__copy">
-          Temukan key yang Anda butuhkan, salin, lalu buka Nusuk untuk
-          melanjutkan. Cepat, sederhana, dan gratis untuk semua.
+          Find the key you need, copy it, and open Nusuk to continue.
+          Fast, simple, and free for everyone.
         </p>
         <div class="hero__meta">
           <span class="status-dot" aria-hidden="true"></span>
-          <span id="key-count">Memuat key...</span>
+          <span id="key-count">Loading keys...</span>
           <span class="meta-separator" aria-hidden="true"></span>
-          <span>Update terakhir: 25 November 2026</span>
+          <span>Last updated: November 25, 2026</span>
         </div>
         <p class="hero__byline">
-          Dibuat langsung oleh <strong>Zaki Zarkasih Al Mustafa</strong>
-          <span aria-hidden="true">·</span>
-          <a href="https://sociabuzz.com/zakezrk/tribe" target="_blank" rel="noopener noreferrer">Support me ↗</a>
+          Created by <strong>Zaki Zarkasih Al Mustafa</strong>
+          <a
+            class="support-icon"
+            href="https://sociabuzz.com/zakezrk/tribe"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Support Zaki on SociaBuzz"
+            title="Support this project"
+          >
+            <svg viewBox="0 0 32 32" aria-hidden="true">
+              <path d="M6 9.5 11 5h15v21H6V9.5Z" />
+              <path class="support-icon__line" d="M6 13.5h20M11 5v4.5H6" />
+              <path class="support-icon__door" d="M19 17h4v9h-4z" />
+            </svg>
+          </a>
         </p>
       </section>
 
-      <section class="keys-section" aria-labelledby="keys-title">
+      <nav class="content-menu" aria-label="Page sections">
+        <a href="#keys">Nusuk Keys</a>
+        <a href="#umrah-winners">Umrah Winners</a>
+        <a href="#zamzam-winners">Daily Zamzam Winners</a>
+      </nav>
+
+      <section id="keys" class="keys-section" aria-labelledby="keys-title">
         <div class="section-heading">
           <div>
-            <p class="section-kicker">Key tersedia</p>
-            <h2 id="keys-title">Semua Nusuk Keys</h2>
+            <p class="section-kicker">Available keys</p>
+            <h2 id="keys-title">All Nusuk Keys</h2>
           </div>
-          <p class="pattern-note">Pola: <code>NG-[A-Za-z0-9]{8}</code></p>
         </div>
 
         <div class="keys-toolbar">
@@ -93,7 +110,7 @@
             <input
               id="key-search"
               type="search"
-              placeholder="Cari key, contoh: NG-g0kjJSOX"
+              placeholder="Search keys, for example: NG-g0kjJSOX"
               autocomplete="off"
               spellcheck="false"
             />
@@ -101,55 +118,78 @@
           <span id="result-count" class="result-count"></span>
         </div>
         <div id="keys-grid" class="keys-grid"></div>
-        <div class="load-more-wrap">
-          <button id="load-more" class="button button--secondary" type="button">
-            Tampilkan lebih banyak
-          </button>
+        <nav id="pagination" class="pagination" aria-label="Key result pages"></nav>
+      </section>
+
+      <section class="winners-section" aria-labelledby="winners-title">
+        <div class="winners-section__heading">
+          <p class="section-kicker">Winner directory</p>
+          <h2 id="winners-title">Umrah &amp; Zamzam Winners</h2>
+          <p>
+            This community tracker covers the campaign's <strong>50 days only</strong>.
+            Winner names will be added after official results are available.
+          </p>
+        </div>
+        <div class="winner-lists">
+          <article id="umrah-winners" class="winner-list-card">
+            <div class="winner-list-card__icon" aria-hidden="true">01</div>
+            <p class="section-kicker">Grand prize</p>
+            <h3>Umrah Winners</h3>
+            <p>Official Umrah winner announcements will be listed here.</p>
+            <div class="winner-list-card__empty">No verified winners listed yet.</div>
+          </article>
+          <article id="zamzam-winners" class="winner-list-card">
+            <div class="winner-list-card__icon" aria-hidden="true">50</div>
+            <p class="section-kicker">Daily prize</p>
+            <h3>Daily Zamzam Winners</h3>
+            <p>One place for verified daily Zamzam winners across all 50 campaign days.</p>
+            <div class="winner-list-card__empty">No verified winners listed yet.</div>
+          </article>
         </div>
       </section>
 
       <section class="how-it-works" aria-labelledby="how-title">
         <div class="how-it-works__intro">
-          <p class="section-kicker">Cara menggunakan</p>
-          <h2 id="how-title">Tiga langkah ringkas</h2>
+          <p class="section-kicker">How it works</p>
+          <h2 id="how-title">Three simple steps</h2>
         </div>
         <ol class="steps">
           <li>
             <span class="step-number">01</span>
             <div>
-              <h3>Salin key</h3>
-              <p>Tekan tombol salin pada kartu key yang tersedia.</p>
+              <h3>Copy a key</h3>
+              <p>Choose an available key and press its copy button.</p>
             </div>
           </li>
           <li>
             <span class="step-number">02</span>
             <div>
-              <h3>Buka Nusuk</h3>
-              <p>Tautan resmi akan membuka aplikasi atau halaman Nusuk.</p>
+              <h3>Open Nusuk</h3>
+              <p>The official link opens the Nusuk app or website.</p>
             </div>
           </li>
           <li>
             <span class="step-number">03</span>
             <div>
-              <h3>Tempel &amp; kirim</h3>
-              <p>Tempel key pada kolom yang sesuai, periksa, lalu submit.</p>
+              <h3>Paste &amp; submit</h3>
+              <p>Paste the key into the relevant field, review it, and submit.</p>
             </div>
           </li>
         </ol>
       </section>
 
-      <aside class="disclaimer" aria-label="Informasi penting">
+      <aside class="disclaimer" aria-label="Important information">
         <span class="disclaimer__icon" aria-hidden="true">i</span>
         <p>
-          <strong>Unofficial — bukan situs resmi Nusuk.</strong>
-          Situs komunitas ini dibuat langsung oleh
-          <strong>Zaki Zarkasih Al Mustafa</strong> dan tidak berafiliasi dengan
-          Nusuk atau Kementerian Haji dan Umrah Arab Saudi.
-          Kami tidak meminta atau menyimpan data pribadi. Selalu periksa bahwa
-          tujuan akhir berada di aplikasi Nusuk atau domain resmi
+          <strong>Unofficial — this is not an official Nusuk website.</strong>
+          This community project was created by
+          <strong>Zaki Zarkasih Al Mustafa</strong> and is not affiliated with
+          Nusuk or the Saudi Ministry of Hajj and Umrah.
+          We do not request or store personal data. Always verify that your
+          destination is the Nusuk app or the official
           <a href="https://www.nusuk.sa/" target="_blank" rel="noopener noreferrer">nusuk.sa</a>.
-          Jika situs ini bermanfaat,
-          <a href="https://sociabuzz.com/zakezrk/tribe" target="_blank" rel="noopener noreferrer">dukung pembuatnya di SociaBuzz</a>.
+          If this project helps you,
+          <a href="https://sociabuzz.com/zakezrk/tribe" target="_blank" rel="noopener noreferrer">support its creator on SociaBuzz</a>.
         </p>
       </aside>
     </main>
@@ -157,7 +197,7 @@
     <footer class="site-footer">
       <div>
         <p class="site-footer__title">Nusuk Keys</p>
-        <p>Unofficial · Dibuat oleh Zaki Zarkasih Al Mustafa.</p>
+        <p>Unofficial · Created by Zaki Zarkasih Al Mustafa.</p>
       </div>
       <div class="site-footer__links">
         <a

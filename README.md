@@ -1,44 +1,54 @@
 # Nusuk Keys
 
-Situs komunitas untuk mencari dan menyalin Nusuk Keys, lalu membuka tautan Nusuk dalam satu klik. Key diekstrak dari komentar publik dengan regex `NG-[A-Za-z0-9]{8}`, kemudian dideduplikasi sebelum diterbitkan.
+An unofficial community website for searching and copying Nusuk Keys, then opening Nusuk in one click. Keys are extracted from public comments with the `NG-[A-Za-z0-9]{8}` pattern and deduplicated before publishing.
 
-> **Unofficial.** Proyek ini dibuat langsung oleh **Zaki Zarkasih Al Mustafa** dan tidak berafiliasi dengan Nusuk atau Kementerian Haji dan Umrah Arab Saudi. Situs tidak meminta atau menyimpan data pribadi, username, atau isi komentar.
+> **Unofficial.** This project was created by **Zaki Zarkasih Al Mustafa** and is not affiliated with Nusuk or the Saudi Ministry of Hajj and Umrah. The website does not request or store personal data, usernames, or comment text.
 
-## Live site
+## Live website
 
 https://zake1god.github.io/nusuk-keys/
 
-## Sumber awal
+## Features
 
-- Postingan resmi Instagram `@mynusuk`: https://www.instagram.com/p/DgIDDFmFyNy/?hl=en
-- Tautan aplikasi dari caption: https://nusuk.go.link/winners
-- Situs resmi Nusuk: https://www.nusuk.sa/
+- Search across all published keys.
+- Google-style pagination with no more than 50 keys per page.
+- Copy a key or copy it and open Nusuk in one click.
+- Separate menus for Umrah Winners and Daily Zamzam Winners.
+- A clear notice that the community winner tracker covers 50 campaign days only.
 
-Ekstraksi 25 November 2026 memindai **12.253 komentar utama** dan **4.317 balasan** yang tersedia melalui pagination Instagram. Hasil akhirnya adalah **10.303 key unik** dengan deduplikasi case-sensitive. Tidak ada username atau teks komentar lain yang diterbitkan.
+Winner names are not invented or inferred. The winner lists remain empty until verified official results are available.
 
-## Memperbarui key
+## Initial sources
 
-Daftar key tersimpan di [`keys.js`](keys.js) sebagai array `window.NUSUK_KEYS`. Hanya masukkan nilai unik yang cocok persis dengan pola berikut:
+- Official `@mynusuk` Instagram post: https://www.instagram.com/p/DgIDDFmFyNy/?hl=en
+- Application link from the caption: https://nusuk.go.link/winners
+- Official Nusuk website: https://www.nusuk.sa/
+
+The November 25, 2026 extraction scanned **12,253 top-level comments** and **4,317 replies** available through Instagram pagination. It produced **10,303 unique keys** using case-sensitive deduplication. No usernames or other comment text are published.
+
+## Updating keys
+
+The key list is stored in [`keys.js`](keys.js) as the `window.NUSUK_KEYS` array. Only add unique values that match the expected key format:
 
 ```js
 window.NUSUK_KEYS = Object.freeze([
   "NG-g0kjJSOX",
-  "NG-contoh12",
+  "NG-example1",
 ]);
 ```
 
-Perbarui juga teks “Update terakhir” di `index.html` bila diperlukan. GitHub Pages akan menerbitkan perubahan dari branch `main` secara otomatis. Antarmuka menampilkan 48 key per batch dan menyediakan pencarian agar daftar besar tetap ringan.
+Update the “Last updated” text in `index.html` when needed. GitHub Pages automatically publishes changes from the `main` branch.
 
-## Menjalankan secara lokal
+## Running locally
 
-Tidak ada proses build atau dependency. Buka `index.html` langsung, atau jalankan server statis pilihan Anda.
+There is no build process or dependency. Open `index.html` directly or serve the directory with any static web server.
 
 ## Support
 
-Jika proyek ini bermanfaat, dukung **Zaki Zarkasih Al Mustafa** melalui [SociaBuzz](https://sociabuzz.com/zakezrk/tribe).
+If this project helps you, support **Zaki Zarkasih Al Mustafa** through [SociaBuzz](https://sociabuzz.com/zakezrk/tribe).
 
-## Lisensi
+## License
 
-Kode sumber tersedia di bawah [MIT License](LICENSE). Nama dan logo Nusuk adalah milik pemegang hak masing-masing.
+The source code is available under the [MIT License](LICENSE). The Nusuk name and logo belong to their respective rights holders.
 
-Logo Nusuk pada situs digunakan hanya untuk identifikasi dan bersumber dari koleksi aset [Saudi Logos](https://salogos.org/logo/676). Seluruh hak merek tetap milik pemiliknya.
+The Nusuk logo is used for identification only and was obtained from the [Saudi Logos](https://salogos.org/logo/676) asset collection. All trademark rights remain with their owner.
