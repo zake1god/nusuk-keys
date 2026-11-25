@@ -93,6 +93,12 @@ main,
   border-bottom: 1px solid var(--line);
 }
 
+.header-support {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .brand {
   display: inline-flex;
   align-items: center;
@@ -326,22 +332,28 @@ h1 em {
   padding: 0 0 24px;
 }
 
-.content-menu a {
+.content-menu__button {
   padding: 9px 14px;
   border: 1px solid var(--line);
   border-radius: 999px;
   color: #bcb4a7;
   background: rgba(255, 255, 255, 0.02);
+  font: inherit;
   font-size: 0.8rem;
   font-weight: 700;
-  text-decoration: none;
+  cursor: pointer;
   transition: border-color 180ms ease, color 180ms ease, background 180ms ease;
 }
 
-.content-menu a:hover {
+.content-menu__button:hover,
+.content-menu__button.is-active {
   border-color: rgba(214, 189, 114, 0.48);
   color: var(--gold-light);
   background: rgba(180, 150, 65, 0.08);
+}
+
+[data-view-panel][hidden] {
+  display: none;
 }
 
 .keys-section {
@@ -433,13 +445,20 @@ h2 {
 .key-card {
   position: relative;
   overflow: hidden;
-  padding: 20px;
+  padding: 18px;
   border: 1px solid var(--line);
-  border-radius: 7px;
+  border-radius: 10px;
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.035), transparent 42%),
     var(--panel);
   box-shadow: 0 18px 45px rgba(0, 0, 0, 0.16);
+  transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+
+.key-card:hover {
+  border-color: rgba(214, 189, 114, 0.42);
+  box-shadow: 0 22px 54px rgba(0, 0, 0, 0.24);
+  transform: translateY(-3px);
 }
 
 .key-card::after {
@@ -464,6 +483,10 @@ h2 {
 }
 
 .key-card__label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
   margin: 0;
   color: var(--muted);
   font-size: 0.7rem;
@@ -472,10 +495,22 @@ h2 {
   text-transform: uppercase;
 }
 
+.key-card__label span:last-child {
+  display: inline-flex;
+  align-items: center;
+  min-height: 23px;
+  padding: 0 8px;
+  border: 1px solid rgba(214, 189, 114, 0.16);
+  border-radius: 999px;
+  color: var(--gold-light);
+  background: rgba(180, 150, 65, 0.06);
+  letter-spacing: 0;
+}
+
 .key-card__value {
   position: relative;
   z-index: 1;
-  margin: 16px 0 18px;
+  margin: 20px 0 21px;
   font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
   font-size: clamp(1.28rem, 4vw, 1.6rem);
   font-weight: 600;
@@ -492,23 +527,29 @@ h2 {
 }
 
 .key-card__actions {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 44px;
   gap: 8px;
 }
 
 .key-card__actions .button--primary {
-  flex: 1 1 170px;
   min-height: 42px;
-  padding-inline: 14px;
-  font-size: 0.78rem;
+  padding-inline: 10px;
+  font-size: 0.74rem;
 }
 
 .key-card__actions .button--secondary {
-  flex: 0 1 auto;
+  width: 44px;
   min-height: 42px;
-  padding-inline: 13px;
-  font-size: 0.78rem;
+  padding: 0;
+}
+
+.key-card__actions .button--secondary svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
 }
 
 .pagination {
@@ -568,7 +609,7 @@ h2 {
 
 .winners-section {
   scroll-margin-top: 20px;
-  padding: 92px 0;
+  padding: 28px 0 92px;
   border-top: 1px solid var(--line);
 }
 
@@ -740,10 +781,46 @@ h2 {
   line-height: 1.25;
 }
 
-.winner-country {
-  margin: 9px 0 0;
-  color: var(--muted);
+.winner-latin-name {
+  margin: 8px 0 0;
+  color: #c9c1b4;
   font-size: 0.82rem;
+  line-height: 1.4;
+}
+
+.winner-latin-name span {
+  margin-right: 7px;
+  color: var(--gold-light);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.winner-country {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin: 9px 0 0;
+  padding: 5px 9px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  color: var(--muted);
+  background: rgba(0, 0, 0, 0.12);
+  font-size: 0.82rem;
+}
+
+.winner-country__flag {
+  width: 20px;
+  height: 15px;
+  border-radius: 2px;
+  object-fit: cover;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+.winner-country__fallback {
+  font-size: 1rem;
+  line-height: 1;
 }
 
 .winner-day-card__zamzam ol {
@@ -834,6 +911,49 @@ h2 {
   margin: 0;
   color: var(--muted);
   font-size: 0.92rem;
+}
+
+.open-source {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 22px;
+  margin: 0 0 24px;
+  padding: 26px;
+  border: 1px solid rgba(214, 189, 114, 0.2);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(180, 150, 65, 0.08), transparent 48%),
+    rgba(255, 255, 255, 0.018);
+}
+
+.open-source__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  border: 1px solid rgba(214, 189, 114, 0.3);
+  border-radius: 50%;
+  color: var(--gold-light);
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.open-source .section-kicker {
+  margin-bottom: 5px;
+}
+
+.open-source h2 {
+  font-size: clamp(1.45rem, 3vw, 2rem);
+}
+
+.open-source p:last-child {
+  max-width: 650px;
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 0.85rem;
 }
 
 .disclaimer {
@@ -947,6 +1067,16 @@ h2 {
 
   .site-header {
     min-height: 90px;
+  }
+
+  .header-support {
+    gap: 5px;
+  }
+
+  .header-support .button {
+    min-height: 36px;
+    padding-inline: 10px;
+    font-size: 0.72rem;
   }
 
   .brand__logo {
@@ -1069,6 +1199,15 @@ h2 {
   .how-it-works {
     grid-template-columns: 1fr;
     padding: 74px 0;
+  }
+
+  .open-source {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .open-source .button {
+    justify-self: stretch;
   }
 
   .site-footer {

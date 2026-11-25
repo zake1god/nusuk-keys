@@ -47,15 +47,20 @@
         <span class="brand__community">Keys</span>
       </a>
 
-      <a
-        class="button button--ghost button--small"
-        href="https://sociabuzz.com/zakezrk/tribe"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <span aria-hidden="true">♡</span>
-        Support me
-      </a>
+      <div class="header-support" aria-label="Support this project">
+        <a
+          class="button button--ghost button--small"
+          href="https://sociabuzz.com/zakezrk/tribe"
+          target="_blank"
+          rel="noopener noreferrer"
+        >SociaBuzz</a>
+        <a
+          class="button button--ghost button--small"
+          href="https://ko-fi.com/zake"
+          target="_blank"
+          rel="noopener noreferrer"
+        >Ko-fi</a>
+      </div>
     </header>
 
     <main id="top">
@@ -104,12 +109,26 @@
         </div>
       </section>
 
-      <nav class="content-menu" aria-label="Page sections">
-        <a href="#keys">Nusuk Keys</a>
-        <a href="#winners">Official Winners</a>
+      <nav class="content-menu" role="tablist" aria-label="Main directory views">
+        <button
+          class="content-menu__button is-active"
+          type="button"
+          role="tab"
+          data-view="keys"
+          aria-controls="keys"
+          aria-selected="true"
+        >All Nusuk Keys</button>
+        <button
+          class="content-menu__button"
+          type="button"
+          role="tab"
+          data-view="winners"
+          aria-controls="winners"
+          aria-selected="false"
+        >Official Winners</button>
       </nav>
 
-      <section id="keys" class="keys-section" aria-labelledby="keys-title">
+      <section id="keys" class="keys-section" data-view-panel="keys" role="tabpanel" aria-labelledby="keys-title">
         <div class="section-heading">
           <div>
             <p class="section-kicker">Available keys</p>
@@ -134,7 +153,7 @@
         <nav id="pagination" class="pagination" aria-label="Key result pages"></nav>
       </section>
 
-      <section id="winners" class="winners-section" aria-labelledby="winners-title">
+      <section id="winners" class="winners-section" data-view-panel="winners" role="tabpanel" aria-labelledby="winners-title" hidden>
         <div class="winners-section__heading">
           <p class="section-kicker">Official winner directory</p>
           <h2 id="winners-title">24 Days of Nusuk Winners</h2>
@@ -206,6 +225,24 @@
         </ol>
       </section>
 
+      <section class="open-source" aria-labelledby="open-source-title">
+        <span class="open-source__icon" aria-hidden="true">&lt;/&gt;</span>
+        <div>
+          <p class="section-kicker">Open source &amp; transparent</p>
+          <h2 id="open-source-title">Review the source code.</h2>
+          <p>
+            This unofficial community project is publicly available on GitHub.
+            Anyone can inspect the data, interface, and update history.
+          </p>
+        </div>
+        <a
+          class="button button--ghost"
+          href="https://github.com/zake1god/nusuk-keys"
+          target="_blank"
+          rel="noopener noreferrer"
+        >View source on GitHub ↗</a>
+      </section>
+
       <aside class="disclaimer" aria-label="Important information">
         <span class="disclaimer__icon" aria-hidden="true">i</span>
         <p>
@@ -241,6 +278,11 @@
           target="_blank"
           rel="noopener noreferrer"
         >Ko-fi ↗</a>
+        <a
+          href="https://github.com/zake1god/nusuk-keys"
+          target="_blank"
+          rel="noopener noreferrer"
+        >Source code ↗</a>
       </div>
     </footer>
 

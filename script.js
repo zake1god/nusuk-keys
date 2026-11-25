@@ -11,6 +11,19 @@ const allKeys = [
 ];
 const keyIndex = new Map(allKeys.map((key, index) => [key, index]));
 const officialWinnerDays = Array.isArray(window.NUSUK_WINNERS) ? window.NUSUK_WINNERS : [];
+const COUNTRY_CODES = Object.freeze({
+  Algeria: "dz",
+  Bangladesh: "bd",
+  Egypt: "eg",
+  India: "in",
+  Indonesia: "id",
+  Jordan: "jo",
+  Morocco: "ma",
+  Pakistan: "pk",
+  Senegal: "sn",
+  Syria: "sy",
+});
+const ARABIC_SCRIPT_PATTERN = /[\u0600-\u06ff]/;
 
 const keysSection = document.querySelector("#keys");
 const keysGrid = document.querySelector("#keys-grid");
@@ -22,6 +35,9 @@ const winnerDays = document.querySelector("#winner-days");
 const winnerSearch = document.querySelector("#winner-search");
 const winnerResultCount = document.querySelector("#winner-result-count");
 const winnerTabs = [...document.querySelectorAll("[data-winner-filter]")];
+const directoryMenu = document.querySelector(".content-menu");
+const viewButtons = [...document.querySelectorAll("[data-view]")];
+const viewPanels = [...document.querySelectorAll("[data-view-panel]")];
 const toast = document.querySelector("#toast");
 
 const initialPage = Number.parseInt(new URLSearchParams(window.location.search).get("page"), 10);
@@ -59,14 +75,17 @@ function createKeyCard(value, index) {
   const article = document.createElement("article");
   article.className = "key-card";
   article.innerHTML = `
-    <p class="key-card__label">Key ${index + 1}</p>
+    <p class="key-card__label"><span>Nusuk key</span><span>#${index + 1}</span></p>
     <p class="key-card__value">${value}</p>
     <div class="key-card__actions">
       <button class="button button--primary" type="button" data-action="copy-open">
-        Copy &amp; Open Nusuk <span aria-hidden="true">↗</span>
+        Copy &amp; Open <span aria-hidden="true">↗</span>
       </button>
-      <button class="button button--secondary" type="button" data-action="copy">
-        Copy
+      <button class="button button--secondary" type="button" data-action="copy" aria-label="Copy ${value}" title="Copy key">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="8" y="8" width="11" height="11" rx="2"></rect>
+          <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path>
+        </svg>
       </button>
     </div>
   `;
@@ -215,6 +234,15 @@ function escapeHtml(value) {
 function createWinnerDayCard(day) {
   const showUmrah = winnerFilter !== "zamzam";
   const showZamzam = winnerFilter !== "umrah";
+  const [officialName, country, latinName] = day.umrah;
+  const countryCode = COUNTRY_CODES[country];
+  const flagMarkup = countryCode
+    ? `<img class="winner-country__flag" src="https://flagcdn.com/w40/${countryCode}.png" width="20" height="15" alt="" loading="lazy" />`
+    : `<span class="winner-country__fallback" aria-hidden="true">🌍</span>`;
+  const latinNameMarkup =
+    latinName && ARABIC_SCRIPT_PATTERN.test(officialName)
+      ? `<p class="winner-latin-name"><span>Latin:</span> ${escapeHtml(latinName)}</p>`
+      : "";
   const article = document.createElement("article");
   article.className = "winner-day-card";
 
@@ -222,8 +250,9 @@ function createWinnerDayCard(day) {
     ? `
       <section class="winner-day-card__umrah" aria-label="Umrah winner">
         <p class="winner-card-label">Umrah winner <span>No. ${day.day}</span></p>
-        <h3 dir="auto">${escapeHtml(day.umrah[0])}</h3>
-        <p class="winner-country">${escapeHtml(day.umrah[1])}</p>
+        <h3 dir="auto">${escapeHtml(officialName)}</h3>
+        ${latinNameMarkup}
+        <p class="winner-country">${flagMarkup}${escapeHtml(country)}</p>
       </section>
     `
     : "";
@@ -285,6 +314,28 @@ function renderWinners() {
   winnerResultCount.textContent = `${matchingDays.length} ${label} shown · Official results through November 24, 2026`;
 }
 
+function setDirectoryView(view, { updateHash = false, scroll = false } = {}) {
+  const selectedView = view === "winners" ? "winners" : "keys";
+
+  viewButtons.forEach((button) => {
+    const isActive = button.dataset.view === selectedView;
+    button.classList.toggle("is-active", isActive);
+    button.setAttribute("aria-selected", String(isActive));
+  });
+
+  viewPanels.forEach((panel) => {
+    panel.hidden = panel.dataset.viewPanel !== selectedView;
+  });
+
+  if (updateHash) {
+    const url = new URL(window.location.href);
+    url.hash = selectedView;
+    window.history.replaceState({}, "", url);
+  }
+
+  if (scroll) directoryMenu.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
 searchInput.addEventListener("input", () => {
   const query = searchInput.value.trim().toLowerCase();
   filteredKeys = query
@@ -304,6 +355,16 @@ winnerTabs.forEach((tab) => {
   });
 });
 
+viewButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    setDirectoryView(button.dataset.view, { updateHash: true, scroll: true });
+  });
+});
+
+window.addEventListener("hashchange", () => {
+  setDirectoryView(window.location.hash === "#winners" ? "winners" : "keys");
+});
+
 window.addEventListener("popstate", () => {
   const page = Number.parseInt(new URLSearchParams(window.location.search).get("page"), 10);
   currentPage = Number.isFinite(page) && page > 0 ? page : 1;
@@ -313,3 +374,4 @@ window.addEventListener("popstate", () => {
 keyCount.textContent = `${allKeys.length.toLocaleString("en-US")} unique keys available`;
 renderKeys({ updateUrl: true });
 renderWinners();
+setDirectoryView(window.location.hash === "#winners" ? "winners" : "keys");

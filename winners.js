@@ -1,5 +1,6 @@
 // Official Nusuk winner announcements published through November 24, 2026.
-// Names are preserved as published by @mynusuk.
+// Names are preserved as published by @mynusuk. A third Umrah field, when
+// present, is a Latin transliteration of an official Arabic-script name.
 window.NUSUK_WINNERS = Object.freeze([
   {
     day: 24,
@@ -21,7 +22,7 @@ window.NUSUK_WINNERS = Object.freeze([
   {
     day: 23,
     date: "Monday 23 November",
-    umrah: ["مروى سيد حنفي قطاريه", "Egypt"],
+    umrah: ["مروى سيد حنفي قطاريه", "Egypt", "Marwa Sayed Hanafi Qatariah"],
     zamzam: [
       "IRFAN AHMED",
       "ابراهيم محمود سعد سيد",
@@ -38,7 +39,7 @@ window.NUSUK_WINNERS = Object.freeze([
   {
     day: 22,
     date: "Sunday 22 November",
-    umrah: ["محمد رشاد عبدالشافي خلف", "Egypt"],
+    umrah: ["محمد رشاد عبدالشافي خلف", "Egypt", "Mohamed Rashad Abdelshafi Khalaf"],
     zamzam: [
       "علي احمد محمد",
       "احمد فرج داخل الحربي",
@@ -55,7 +56,7 @@ window.NUSUK_WINNERS = Object.freeze([
   {
     day: 21,
     date: "Saturday 21 November",
-    umrah: ["مصعب خالد ابراهيم صخريه", "Jordan"],
+    umrah: ["مصعب خالد ابراهيم صخريه", "Jordan", "Musab Khaled Ibrahim Sakhriya"],
     zamzam: [
       "UMAR GHAFFAR",
       "ALI BOUBAKAR",
@@ -72,7 +73,7 @@ window.NUSUK_WINNERS = Object.freeze([
   {
     day: 20,
     date: "Friday 20 November",
-    umrah: ["حملاوي كاتية", "Algeria"],
+    umrah: ["حملاوي كاتية", "Algeria", "Hamlawi Katia"],
     zamzam: [
       "ALI HAIDER KHAN",
       "مريم هشام محمود عوض",
@@ -106,7 +107,7 @@ window.NUSUK_WINNERS = Object.freeze([
   {
     day: 18,
     date: "Wednesday 18 November",
-    umrah: ["خالد عبدالرحمن عثمان", "Egypt"],
+    umrah: ["خالد عبدالرحمن عثمان", "Egypt", "Khaled Abdelrahman Othman"],
     zamzam: [
       "غريب سلمان سلامه ابوزيد",
       "أحمد عيد محمود عبد الواحد",
@@ -140,7 +141,7 @@ window.NUSUK_WINNERS = Object.freeze([
   {
     day: 16,
     date: "Monday 16 November",
-    umrah: ["خديجة ديوب", "Senegal"],
+    umrah: ["خديجة ديوب", "Senegal", "Khadija Diop"],
     zamzam: [
       "سلطان ابوجمره السيد ابراهيم",
       "UMAR ZAMAN HAQIQ",
@@ -259,7 +260,7 @@ window.NUSUK_WINNERS = Object.freeze([
   {
     day: 9,
     date: "Monday 9 November",
-    umrah: ["هناء صلاح", "Egypt"],
+    umrah: ["هناء صلاح", "Egypt", "Hanaa Salah"],
     zamzam: [
       "ASHFAQ AHMAD AHMAD",
       "انس انور احمد نعمان",
@@ -293,7 +294,7 @@ window.NUSUK_WINNERS = Object.freeze([
   {
     day: 7,
     date: "Saturday 7 November",
-    umrah: ["لبنى اهنا", "Morocco"],
+    umrah: ["لبنى اهنا", "Morocco", "Lubna Ahna"],
     zamzam: [
       "نوف بدر عبدالرحمن العتيبي",
       "MUHAMMAD UZAIR",
@@ -327,7 +328,7 @@ window.NUSUK_WINNERS = Object.freeze([
   {
     day: 5,
     date: "Thursday 5 November",
-    umrah: ["عزه علي ابراهيم رمضان", "Egypt"],
+    umrah: ["عزه علي ابراهيم رمضان", "Egypt", "Ezza Ali Ibrahim Ramadan"],
     zamzam: [
       "احمد محمد احمد حسن",
       "ماجد عبد الجواد شوشه",

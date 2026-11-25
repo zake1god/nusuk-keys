@@ -14,9 +14,13 @@ https://zake1god.github.io/nusuk-keys/
 - Google-style pagination with no more than 50 keys per page.
 - Copy a key or copy it and open Nusuk in one click.
 - Five key cards per row on desktop, with responsive layouts for smaller screens.
+- Switch between **All Nusuk Keys** and **Official Winners** without scrolling through both directories.
 - A searchable official winner directory covering the first 24 published daily results.
 - Two winner filters: 24 Umrah winners and 240 Zamzam winners.
+- Country flags and Latin transliterations for Arabic-script Umrah winner names.
 - A clear notice that the complete campaign runs for 50 days.
+- SociaBuzz and Ko-fi support links in both the header and page body.
+- A visible link back to this public repository for transparency.
 
 Winner names are preserved as published by Nusuk. The current directory contains 264 names announced through November 24, 2026.
 
