@@ -1,8 +1,8 @@
 # Nusuk Keys
 
-Situs komunitas sederhana untuk menyalin Nusuk Key terbaru dan membuka tautan resmi Nusuk dalam satu klik.
+Situs komunitas untuk mencari dan menyalin Nusuk Keys, lalu membuka tautan Nusuk dalam satu klik. Key diekstrak dari komentar publik dengan regex `NG-[A-Za-z0-9]{8}`, kemudian dideduplikasi sebelum diterbitkan.
 
-> Proyek ini bukan situs resmi Nusuk dan tidak berafiliasi dengan Nusuk atau Kementerian Haji dan Umrah Arab Saudi. Situs tidak meminta atau menyimpan data pribadi.
+> **Unofficial.** Proyek ini dibuat langsung oleh **Zaki Zarkasih Al Mustafa** dan tidak berafiliasi dengan Nusuk atau Kementerian Haji dan Umrah Arab Saudi. Situs tidak meminta atau menyimpan data pribadi, username, atau isi komentar.
 
 ## Live site
 
@@ -14,25 +14,20 @@ https://zake1god.github.io/nusuk-keys/
 - Tautan aplikasi dari caption: https://nusuk.go.link/winners
 - Situs resmi Nusuk: https://www.nusuk.sa/
 
-Nilai awal yang ditampilkan adalah **24**, sesuai posting sumber di atas.
+Ekstraksi 25 November 2026 memindai **12.253 komentar utama** dan **4.317 balasan** yang tersedia melalui pagination Instagram. Hasil akhirnya adalah **10.303 key unik** dengan deduplikasi case-sensitive. Tidak ada username atau teks komentar lain yang diterbitkan.
 
 ## Memperbarui key
 
-Edit array `nusukKeys` di [`script.js`](script.js). Tambahkan data terbaru di posisi paling atas:
+Daftar key tersimpan di [`keys.js`](keys.js) sebagai array `window.NUSUK_KEYS`. Hanya masukkan nilai unik yang cocok persis dengan pola berikut:
 
 ```js
-{
-  value: "KEY_BARU",
-  label: "Nusuk Key terbaru",
-  description: "Key yang diambil dari posting resmi @mynusuk.",
-  sourceName: "Instagram @mynusuk",
-  sourceUrl: "URL_POSTING_SUMBER",
-  submitUrl: "https://nusuk.go.link/winners",
-  status: "Terbaru",
-},
+window.NUSUK_KEYS = Object.freeze([
+  "NG-g0kjJSOX",
+  "NG-contoh12",
+]);
 ```
 
-Perbarui juga teks “Update terakhir” di `index.html` bila diperlukan. GitHub Pages akan menerbitkan perubahan dari branch `main` secara otomatis.
+Perbarui juga teks “Update terakhir” di `index.html` bila diperlukan. GitHub Pages akan menerbitkan perubahan dari branch `main` secara otomatis. Antarmuka menampilkan 48 key per batch dan menyediakan pencarian agar daftar besar tetap ringan.
 
 ## Menjalankan secara lokal
 
@@ -40,7 +35,7 @@ Tidak ada proses build atau dependency. Buka `index.html` langsung, atau jalanka
 
 ## Support
 
-Jika proyek ini bermanfaat, dukung pengembang melalui [SociaBuzz](https://sociabuzz.com/zakezrk/tribe).
+Jika proyek ini bermanfaat, dukung **Zaki Zarkasih Al Mustafa** melalui [SociaBuzz](https://sociabuzz.com/zakezrk/tribe).
 
 ## Lisensi
 

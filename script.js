@@ -1,19 +1,26 @@
-// Tambahkan key baru di bagian paling atas daftar ini untuk update harian.
-const nusukKeys = [
-  {
-    value: "24",
-    label: "Nusuk Key #24",
-    description: "Key yang diambil dari posting resmi @mynusuk.",
-    sourceName: "Instagram @mynusuk",
-    sourceUrl: "https://www.instagram.com/p/DgIDDFmFyNy/?hl=en",
-    submitUrl: "https://nusuk.go.link/winners",
-    status: "Terbaru",
-  },
+const NUSUK_SUBMIT_URL = "https://nusuk.go.link/winners";
+const KEY_PATTERN = /^NG-[A-Za-z0-9]{8}$/;
+const BATCH_SIZE = 48;
+
+const allKeys = [
+  ...new Set(
+    (Array.isArray(window.NUSUK_KEYS) ? window.NUSUK_KEYS : []).filter((key) =>
+      KEY_PATTERN.test(key),
+    ),
+  ),
 ];
+const keyIndex = new Map(allKeys.map((key, index) => [key, index]));
 
 const keysGrid = document.querySelector("#keys-grid");
 const keyCount = document.querySelector("#key-count");
+const resultCount = document.querySelector("#result-count");
+const searchInput = document.querySelector("#key-search");
+const loadMoreButton = document.querySelector("#load-more");
+const loadMoreWrap = loadMoreButton.closest(".load-more-wrap");
 const toast = document.querySelector("#toast");
+
+let filteredKeys = allKeys;
+let visibleCount = BATCH_SIZE;
 let toastTimer;
 
 function showToast(message) {
@@ -41,48 +48,82 @@ async function copyValue(value) {
   }
 }
 
-function createKeyCard(key) {
+function createKeyCard(value, index) {
   const article = document.createElement("article");
   article.className = "key-card";
-
   article.innerHTML = `
     <div class="key-card__top">
-      <p class="key-card__label">${key.label}</p>
-      <span class="key-card__badge">${key.status}</span>
+      <p class="key-card__label">Key ${index + 1}</p>
+      <span class="key-card__badge">Sesuai pola</span>
     </div>
-    <p class="key-card__value" aria-label="Key ${key.value}">${key.value}</p>
-    <p class="key-card__description">${key.description}</p>
+    <p class="key-card__value">${value}</p>
     <div class="key-card__actions">
       <button class="button button--primary" type="button" data-action="copy-open">
         Salin &amp; Buka Nusuk <span aria-hidden="true">↗</span>
       </button>
       <button class="button button--secondary" type="button" data-action="copy">
-        Salin key
+        Salin
       </button>
     </div>
-    <p class="key-card__source">
-      Sumber:
-      <a href="${key.sourceUrl}" target="_blank" rel="noopener noreferrer">
-        ${key.sourceName} ↗
-      </a>
-    </p>
   `;
 
   article.querySelector('[data-action="copy"]').addEventListener("click", async () => {
-    await copyValue(key.value);
-    showToast(`Key ${key.value} berhasil disalin.`);
+    await copyValue(value);
+    showToast(`${value} berhasil disalin.`);
   });
 
   article.querySelector('[data-action="copy-open"]').addEventListener("click", async () => {
-    await copyValue(key.value);
-    showToast(`Key ${key.value} disalin. Membuka Nusuk...`);
+    await copyValue(value);
+    showToast(`${value} disalin. Membuka Nusuk...`);
     window.setTimeout(() => {
-      window.location.assign(key.submitUrl);
+      window.location.assign(NUSUK_SUBMIT_URL);
     }, 500);
   });
 
   return article;
 }
 
-nusukKeys.forEach((key) => keysGrid.appendChild(createKeyCard(key)));
-keyCount.textContent = `${nusukKeys.length} key tersedia`;
+function renderKeys({ append = false } = {}) {
+  const totalVisible = Math.min(visibleCount, filteredKeys.length);
+  const startIndex = append
+    ? Math.min(Math.max(0, visibleCount - BATCH_SIZE), filteredKeys.length)
+    : 0;
+  const shownKeys = filteredKeys.slice(startIndex, totalVisible);
+
+  if (!append) {
+    keysGrid.replaceChildren();
+  }
+
+  if (!append && shownKeys.length === 0) {
+    const emptyState = document.createElement("p");
+    emptyState.className = "empty-state";
+    emptyState.textContent = "Key tidak ditemukan. Periksa kembali kata pencarian Anda.";
+    keysGrid.appendChild(emptyState);
+  } else {
+    const fragment = document.createDocumentFragment();
+    shownKeys.forEach((value) => {
+      fragment.appendChild(createKeyCard(value, keyIndex.get(value)));
+    });
+    keysGrid.appendChild(fragment);
+  }
+
+  resultCount.textContent = `${totalVisible.toLocaleString("id-ID")} dari ${filteredKeys.length.toLocaleString("id-ID")} key`;
+  loadMoreWrap.hidden = totalVisible >= filteredKeys.length;
+}
+
+searchInput.addEventListener("input", () => {
+  const query = searchInput.value.trim().toLowerCase();
+  filteredKeys = query
+    ? allKeys.filter((key) => key.toLowerCase().includes(query))
+    : allKeys;
+  visibleCount = BATCH_SIZE;
+  renderKeys();
+});
+
+loadMoreButton.addEventListener("click", () => {
+  visibleCount += BATCH_SIZE;
+  renderKeys({ append: true });
+});
+
+keyCount.textContent = `${allKeys.length.toLocaleString("id-ID")} key unik tersedia`;
+renderKeys();

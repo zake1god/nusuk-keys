@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Kumpulan Nusuk Keys dari sumber resmi @mynusuk. Salin key dan buka aplikasi Nusuk dalam satu klik."
+      content="Kumpulan Nusuk Keys unofficial. Cari, salin key, dan buka aplikasi Nusuk dalam satu klik."
     />
     <meta name="theme-color" content="#171510" />
     <meta property="og:title" content="Nusuk Keys" />
     <meta
       property="og:description"
-      content="Salin Nusuk Key terbaru dan lanjutkan ke aplikasi Nusuk."
+      content="Cari dan salin Nusuk Keys dari komentar publik, lalu lanjutkan ke aplikasi Nusuk."
     />
     <meta property="og:type" content="website" />
     <title>Nusuk Keys</title>
@@ -26,6 +26,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
+    <script src="keys.js" defer></script>
     <script src="script.js" defer></script>
   </head>
   <body>
@@ -58,11 +59,11 @@
 
     <main id="top">
       <section class="hero" aria-labelledby="hero-title">
-        <p class="eyebrow"><span></span> Diperbarui dari sumber resmi</p>
-        <h1 id="hero-title">Satu key.<br /><em>Satu langkah lebih dekat.</em></h1>
+        <p class="eyebrow"><span></span> Unofficial community project</p>
+        <h1 id="hero-title">Nusuk Keys, <em>siap disalin.</em></h1>
         <p class="hero__copy">
-          Salin Nusuk Key terbaru, lalu buka aplikasi Nusuk untuk melanjutkan
-          pengiriman. Cepat, sederhana, dan gratis untuk semua.
+          Temukan key yang Anda butuhkan, salin, lalu buka Nusuk untuk
+          melanjutkan. Cepat, sederhana, dan gratis untuk semua.
         </p>
         <div class="hero__meta">
           <span class="status-dot" aria-hidden="true"></span>
@@ -70,25 +71,41 @@
           <span class="meta-separator" aria-hidden="true"></span>
           <span>Update terakhir: 25 November 2026</span>
         </div>
+        <p class="hero__byline">
+          Dibuat langsung oleh <strong>Zaki Zarkasih Al Mustafa</strong>
+          <span aria-hidden="true">·</span>
+          <a href="https://sociabuzz.com/zakezrk/tribe" target="_blank" rel="noopener noreferrer">Support me ↗</a>
+        </p>
       </section>
 
       <section class="keys-section" aria-labelledby="keys-title">
         <div class="section-heading">
           <div>
             <p class="section-kicker">Key tersedia</p>
-            <h2 id="keys-title">Nusuk Key terbaru</h2>
+            <h2 id="keys-title">Semua Nusuk Keys</h2>
           </div>
-          <a
-            class="source-link"
-            href="https://www.instagram.com/p/DgIDDFmFyNy/?hl=en"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Lihat sumber Instagram <span aria-hidden="true">↗</span>
-          </a>
+          <p class="pattern-note">Pola: <code>NG-[A-Za-z0-9]{8}</code></p>
         </div>
 
+        <div class="keys-toolbar">
+          <label class="search-box" for="key-search">
+            <span aria-hidden="true">⌕</span>
+            <input
+              id="key-search"
+              type="search"
+              placeholder="Cari key, contoh: NG-g0kjJSOX"
+              autocomplete="off"
+              spellcheck="false"
+            />
+          </label>
+          <span id="result-count" class="result-count"></span>
+        </div>
         <div id="keys-grid" class="keys-grid"></div>
+        <div class="load-more-wrap">
+          <button id="load-more" class="button button--secondary" type="button">
+            Tampilkan lebih banyak
+          </button>
+        </div>
       </section>
 
       <section class="how-it-works" aria-labelledby="how-title">
@@ -124,10 +141,15 @@
       <aside class="disclaimer" aria-label="Informasi penting">
         <span class="disclaimer__icon" aria-hidden="true">i</span>
         <p>
-          <strong>Proyek komunitas, bukan situs resmi Nusuk.</strong>
+          <strong>Unofficial — bukan situs resmi Nusuk.</strong>
+          Situs komunitas ini dibuat langsung oleh
+          <strong>Zaki Zarkasih Al Mustafa</strong> dan tidak berafiliasi dengan
+          Nusuk atau Kementerian Haji dan Umrah Arab Saudi.
           Kami tidak meminta atau menyimpan data pribadi. Selalu periksa bahwa
           tujuan akhir berada di aplikasi Nusuk atau domain resmi
           <a href="https://www.nusuk.sa/" target="_blank" rel="noopener noreferrer">nusuk.sa</a>.
+          Jika situs ini bermanfaat,
+          <a href="https://sociabuzz.com/zakezrk/tribe" target="_blank" rel="noopener noreferrer">dukung pembuatnya di SociaBuzz</a>.
         </p>
       </aside>
     </main>
@@ -135,7 +157,7 @@
     <footer class="site-footer">
       <div>
         <p class="site-footer__title">Nusuk Keys</p>
-        <p>Dibuat untuk membantu sesama pengguna Nusuk.</p>
+        <p>Unofficial · Dibuat oleh Zaki Zarkasih Al Mustafa.</p>
       </div>
       <div class="site-footer__links">
         <a
@@ -143,11 +165,6 @@
           target="_blank"
           rel="noopener noreferrer"
         >Support me ↗</a>
-        <a
-          href="https://www.instagram.com/p/DgIDDFmFyNy/?hl=en"
-          target="_blank"
-          rel="noopener noreferrer"
-        >Sumber ↗</a>
       </div>
     </footer>
 
