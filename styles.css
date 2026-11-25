@@ -941,6 +941,12 @@ h2 {
   font-weight: 700;
 }
 
+.open-source__icon svg {
+  width: 25px;
+  height: 25px;
+  fill: currentColor;
+}
+
 .open-source .section-kicker {
   margin-bottom: 5px;
 }
