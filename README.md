@@ -1,6 +1,6 @@
 # Nusuk Keys
 
-An unofficial community website for searching and copying Nusuk Keys, then opening Nusuk in one click. Keys are extracted from public comments with the `NG-[A-Za-z0-9]{8}` pattern and deduplicated before publishing.
+An unofficial community website for searching and copying Nusuk Keys, browsing community-verified challenge answers, reading campaign help, and checking official winners. Keys are extracted from public comments with the `NG-[A-Za-z0-9]{8}` pattern and deduplicated before publishing.
 
 > **Unofficial.** This project was created by **Zaki Zarkasih Al Mustafa** and is not affiliated with Nusuk or the Saudi Ministry of Hajj and Umrah. The website does not request or store personal data, usernames, or comment text.
 
@@ -14,7 +14,11 @@ https://zake1god.github.io/nusuk-keys/
 - Google-style pagination with no more than 50 keys per page.
 - Copy a key or copy it and open Nusuk in one click.
 - Five key cards per row on desktop, with responsive layouts for smaller screens.
-- Switch between **All Nusuk Keys** and **Official Winners** without scrolling through both directories.
+- Switch between **All Nusuk Keys**, **Answer Keys**, **Official Winners**, and **FAQ** without scrolling through every directory.
+- Browse 411 community-verified answers across the four in-app challenge categories: The Quran, The Prophet’s Biography, Makkah and the Grand Mosque, and Madinah and the Prophet’s Mosque.
+- Search questions and answers within the selected category, with 20 answer cards per page and one-click answer copying.
+- Read an informative FAQ adapted from the Nusuk app’s Help → Support Center section, beginning with a clear unofficial-project notice.
+- Official customer care contacts shown in the app, including phone, email, and social support channels.
 - A searchable official winner directory covering the first 24 published daily results.
 - Winner pagination with no more than five daily result cards per page.
 - Two winner filters: 24 Umrah winners and 240 Zamzam winners.
@@ -48,6 +52,8 @@ window.NUSUK_KEYS = Object.freeze([
 Update the “Last updated” text in `index.html` when needed. GitHub Pages automatically publishes changes from the `main` branch.
 
 Winner data is stored separately in [`winners.js`](winners.js), grouped by campaign day with one Umrah winner and ten Zamzam winners per published day.
+
+Challenge answers are stored separately in [`answers.js`](answers.js), grouped into the same four categories shown in the app. The FAQ text in `index.html` is a concise adaptation of the Nusuk app’s Help → Support Center content; official app information and terms take precedence.
 
 ## Running locally
 

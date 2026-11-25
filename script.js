@@ -1,7 +1,9 @@
 const NUSUK_SUBMIT_URL = "https://nusuk.go.link/winners";
 const KEY_PATTERN = /^NG-[A-Za-z0-9]{8}$/;
 const ITEMS_PER_PAGE = 50;
+const ANSWER_ITEMS_PER_PAGE = 20;
 const WINNER_ITEMS_PER_PAGE = 5;
+const DIRECTORY_VIEWS = new Set(["keys", "answers", "winners", "faq"]);
 
 const allKeys = [
   ...new Set(
@@ -11,6 +13,14 @@ const allKeys = [
   ),
 ];
 const keyIndex = new Map(allKeys.map((key, index) => [key, index]));
+const answerCategories =
+  window.NUSUK_ANSWERS && typeof window.NUSUK_ANSWERS === "object"
+    ? window.NUSUK_ANSWERS
+    : {};
+const allAnswerCount = Object.values(answerCategories).reduce(
+  (total, category) => total + (Array.isArray(category.entries) ? category.entries.length : 0),
+  0,
+);
 const officialWinnerDays = Array.isArray(window.NUSUK_WINNERS) ? window.NUSUK_WINNERS : [];
 const COUNTRY_CODES = Object.freeze({
   Algeria: "dz",
@@ -32,6 +42,13 @@ const keyCount = document.querySelector("#key-count");
 const resultCount = document.querySelector("#result-count");
 const searchInput = document.querySelector("#key-search");
 const pagination = document.querySelector("#pagination");
+const answersSection = document.querySelector("#answers");
+const answerTotal = document.querySelector("#answer-total");
+const answerSearch = document.querySelector("#answer-search");
+const answerResultCount = document.querySelector("#answer-result-count");
+const answerList = document.querySelector("#answer-list");
+const answerPagination = document.querySelector("#answer-pagination");
+const answerCategoryButtons = [...document.querySelectorAll("[data-answer-category]")];
 const winnerDays = document.querySelector("#winner-days");
 const winnerSearch = document.querySelector("#winner-search");
 const winnerResultCount = document.querySelector("#winner-result-count");
@@ -45,6 +62,9 @@ const toast = document.querySelector("#toast");
 const initialPage = Number.parseInt(new URLSearchParams(window.location.search).get("page"), 10);
 let filteredKeys = allKeys;
 let currentPage = Number.isFinite(initialPage) && initialPage > 0 ? initialPage : 1;
+let currentAnswerCategory = "quran";
+let filteredAnswers = [];
+let currentAnswerPage = 1;
 let winnerFilter = "all";
 let currentWinnerPage = 1;
 let toastTimer;
@@ -234,6 +254,149 @@ function escapeHtml(value) {
     .replaceAll("'", "&#039;");
 }
 
+function currentAnswerData() {
+  const fallbackId = Object.keys(answerCategories)[0];
+  const categoryId = answerCategories[currentAnswerCategory] ? currentAnswerCategory : fallbackId;
+  return answerCategories[categoryId] || { label: "Answer Keys", entries: [] };
+}
+
+function createAnswerCard(entry, index) {
+  const article = document.createElement("article");
+  article.className = "answer-card";
+  article.innerHTML = `
+    <div class="answer-card__meta">
+      <span>Question ${index + 1}</span>
+      <span>Verified</span>
+    </div>
+    <h3>${escapeHtml(entry.question)}</h3>
+    <div class="answer-card__answer">
+      <span>Answer</span>
+      <p>${escapeHtml(entry.answer).replaceAll("\n", "<br>")}</p>
+    </div>
+    <button class="answer-card__copy" type="button">Copy answer</button>
+  `;
+
+  article.querySelector(".answer-card__copy").addEventListener("click", async () => {
+    await copyValue(entry.answer);
+    showToast("Answer copied.");
+  });
+  return article;
+}
+
+function createAnswerPageButton(label, page, { current = false, disabled = false } = {}) {
+  const button = document.createElement("button");
+  button.className = "pagination__button";
+  button.type = "button";
+  button.textContent = label;
+  button.disabled = disabled;
+  button.setAttribute(
+    "aria-label",
+    label === "Previous" || label === "Next" ? `${label} answer page` : `Go to answer page ${page}`,
+  );
+
+  if (current) {
+    button.classList.add("is-current");
+    button.setAttribute("aria-current", "page");
+  }
+
+  if (!disabled && !current) {
+    button.addEventListener("click", () => {
+      currentAnswerPage = page;
+      renderAnswers({ scroll: true });
+    });
+  }
+  return button;
+}
+
+function renderAnswerPagination(totalPages) {
+  answerPagination.replaceChildren();
+  if (totalPages <= 1) {
+    answerPagination.hidden = true;
+    return;
+  }
+
+  answerPagination.hidden = false;
+  answerPagination.appendChild(
+    createAnswerPageButton("Previous", currentAnswerPage - 1, {
+      disabled: currentAnswerPage === 1,
+    }),
+  );
+
+  getPaginationItems(totalPages, currentAnswerPage).forEach((item) => {
+    if (item === "ellipsis") {
+      const ellipsis = document.createElement("span");
+      ellipsis.className = "pagination__ellipsis";
+      ellipsis.textContent = "…";
+      ellipsis.setAttribute("aria-hidden", "true");
+      answerPagination.appendChild(ellipsis);
+      return;
+    }
+    answerPagination.appendChild(
+      createAnswerPageButton(String(item), item, { current: item === currentAnswerPage }),
+    );
+  });
+
+  answerPagination.appendChild(
+    createAnswerPageButton("Next", currentAnswerPage + 1, {
+      disabled: currentAnswerPage === totalPages,
+    }),
+  );
+}
+
+function renderAnswers({ scroll = false } = {}) {
+  const category = currentAnswerData();
+  const query = answerSearch.value.trim().toLocaleLowerCase();
+  filteredAnswers = category.entries.filter((entry) =>
+    !query || [entry.question, entry.answer].some((value) =>
+      String(value).toLocaleLowerCase().includes(query),
+    ),
+  );
+
+  const totalPages = Math.max(1, Math.ceil(filteredAnswers.length / ANSWER_ITEMS_PER_PAGE));
+  currentAnswerPage = Math.min(Math.max(1, currentAnswerPage), totalPages);
+  const startIndex = (currentAnswerPage - 1) * ANSWER_ITEMS_PER_PAGE;
+  const visibleAnswers = filteredAnswers.slice(
+    startIndex,
+    startIndex + ANSWER_ITEMS_PER_PAGE,
+  );
+  answerList.replaceChildren();
+
+  if (visibleAnswers.length === 0) {
+    const emptyState = document.createElement("p");
+    emptyState.className = "empty-state";
+    emptyState.textContent = "No question or answer matches this search.";
+    answerList.appendChild(emptyState);
+  } else {
+    const fragment = document.createDocumentFragment();
+    visibleAnswers.forEach((entry, offset) => {
+      fragment.appendChild(createAnswerCard(entry, startIndex + offset));
+    });
+    answerList.appendChild(fragment);
+  }
+
+  const firstResult = filteredAnswers.length === 0 ? 0 : startIndex + 1;
+  const lastResult = Math.min(startIndex + ANSWER_ITEMS_PER_PAGE, filteredAnswers.length);
+  answerResultCount.textContent = `${firstResult}–${lastResult} of ${filteredAnswers.length} · ${category.label}`;
+  renderAnswerPagination(filteredAnswers.length === 0 ? 0 : totalPages);
+  if (scroll) answersSection.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function setAnswerCategory(categoryId, { scroll = false } = {}) {
+  if (!answerCategories[categoryId]) return;
+  currentAnswerCategory = categoryId;
+  currentAnswerPage = 1;
+  answerSearch.value = "";
+  const category = currentAnswerData();
+  answerSearch.placeholder = `Search ${category.label} questions and answers`;
+
+  answerCategoryButtons.forEach((button) => {
+    const isActive = button.dataset.answerCategory === categoryId;
+    button.classList.toggle("is-active", isActive);
+    button.setAttribute("aria-pressed", String(isActive));
+  });
+  renderAnswers({ scroll });
+}
+
 function createWinnerDayCard(day) {
   const showUmrah = winnerFilter !== "zamzam";
   const showZamzam = winnerFilter !== "umrah";
@@ -389,7 +552,7 @@ function renderWinners({ scroll = false } = {}) {
 }
 
 function setDirectoryView(view, { updateHash = false, scroll = false } = {}) {
-  const selectedView = view === "winners" ? "winners" : "keys";
+  const selectedView = DIRECTORY_VIEWS.has(view) ? view : "keys";
 
   viewButtons.forEach((button) => {
     const isActive = button.dataset.view === selectedView;
@@ -410,6 +573,11 @@ function setDirectoryView(view, { updateHash = false, scroll = false } = {}) {
   if (scroll) directoryMenu.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
+function viewFromHash() {
+  const view = window.location.hash.slice(1);
+  return DIRECTORY_VIEWS.has(view) ? view : "keys";
+}
+
 searchInput.addEventListener("input", () => {
   const query = searchInput.value.trim().toLowerCase();
   filteredKeys = query
@@ -417,6 +585,17 @@ searchInput.addEventListener("input", () => {
     : allKeys;
   currentPage = 1;
   renderKeys({ updateUrl: true });
+});
+
+answerSearch.addEventListener("input", () => {
+  currentAnswerPage = 1;
+  renderAnswers();
+});
+
+answerCategoryButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    setAnswerCategory(button.dataset.answerCategory, { scroll: true });
+  });
 });
 
 winnerSearch.addEventListener("input", () => {
@@ -440,7 +619,7 @@ viewButtons.forEach((button) => {
 });
 
 window.addEventListener("hashchange", () => {
-  setDirectoryView(window.location.hash === "#winners" ? "winners" : "keys");
+  setDirectoryView(viewFromHash());
 });
 
 window.addEventListener("popstate", () => {
@@ -450,6 +629,8 @@ window.addEventListener("popstate", () => {
 });
 
 keyCount.textContent = `${allKeys.length.toLocaleString("en-US")} unique keys available`;
+answerTotal.textContent = allAnswerCount.toLocaleString("en-US");
 renderKeys({ updateUrl: true });
+setAnswerCategory(currentAnswerCategory);
 renderWinners();
-setDirectoryView(window.location.hash === "#winners" ? "winners" : "keys");
+setDirectoryView(viewFromHash());

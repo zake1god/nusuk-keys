@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Search and copy Nusuk Keys, then browse official Umrah and Zamzam winner announcements in one community directory."
+      content="Search Nusuk keys, browse community-verified challenge answers, read campaign help, and view official winner announcements."
     />
     <meta name="theme-color" content="#171510" />
     <meta property="og:title" content="Nusuk Keys" />
     <meta
       property="og:description"
-      content="Search Nusuk Keys and browse published Umrah and Zamzam winners in one community directory."
+      content="Search Nusuk keys, browse challenge answers by category, read campaign help, and view official winners."
     />
     <meta property="og:type" content="website" />
     <title>Nusuk Keys</title>
@@ -25,10 +25,11 @@
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Playfair+Display:wght@600;700&amp;display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=20261125-4" />
+    <link rel="stylesheet" href="styles.css?v=20261125-5" />
     <script src="keys.js" defer></script>
+    <script src="answers.js" defer></script>
     <script src="winners.js" defer></script>
-    <script src="script.js?v=20261125-3" defer></script>
+    <script src="script.js?v=20261125-4" defer></script>
   </head>
   <body>
     <div class="page-glow page-glow--one" aria-hidden="true"></div>
@@ -122,10 +123,26 @@
           class="content-menu__button"
           type="button"
           role="tab"
+          data-view="answers"
+          aria-controls="answers"
+          aria-selected="false"
+        >Answer Keys</button>
+        <button
+          class="content-menu__button"
+          type="button"
+          role="tab"
           data-view="winners"
           aria-controls="winners"
           aria-selected="false"
         >Official Winners</button>
+        <button
+          class="content-menu__button"
+          type="button"
+          role="tab"
+          data-view="faq"
+          aria-controls="faq"
+          aria-selected="false"
+        >FAQ</button>
       </nav>
 
       <section id="keys" class="keys-section" data-view-panel="keys" role="tabpanel" aria-labelledby="keys-title">
@@ -151,6 +168,52 @@
         </div>
         <div id="keys-grid" class="keys-grid"></div>
         <nav id="pagination" class="pagination" aria-label="Key result pages"></nav>
+      </section>
+
+      <section id="answers" class="answers-section" data-view-panel="answers" role="tabpanel" aria-labelledby="answers-title" hidden>
+        <div class="answers-section__heading">
+          <p class="section-kicker">Community-verified challenge reference</p>
+          <h2 id="answers-title">Answer Keys by Category</h2>
+          <p>
+            Browse <strong id="answer-total">411</strong> answers grouped by the four categories shown in the Nusuk challenge.
+            Search the question or answer, then copy what you need.
+          </p>
+        </div>
+
+        <div class="answer-category-menu" role="group" aria-label="Choose an answer category">
+          <button class="answer-category is-active" type="button" data-answer-category="quran" aria-pressed="true">
+            <span class="answer-category__number">01</span>
+            <span><strong>The Quran</strong><small>103 answers</small></span>
+          </button>
+          <button class="answer-category" type="button" data-answer-category="prophet" aria-pressed="false">
+            <span class="answer-category__number">02</span>
+            <span><strong>The Prophet’s Biography</strong><small>108 answers</small></span>
+          </button>
+          <button class="answer-category" type="button" data-answer-category="makkah" aria-pressed="false">
+            <span class="answer-category__number">03</span>
+            <span><strong>Makkah and the Grand Mosque</strong><small>100 answers</small></span>
+          </button>
+          <button class="answer-category" type="button" data-answer-category="madinah" aria-pressed="false">
+            <span class="answer-category__number">04</span>
+            <span><strong>Madinah and the Prophet’s Mosque</strong><small>100 answers</small></span>
+          </button>
+        </div>
+
+        <div class="answer-toolbar">
+          <label class="search-box" for="answer-search">
+            <span aria-hidden="true">⌕</span>
+            <input
+              id="answer-search"
+              type="search"
+              placeholder="Search this category by question or answer"
+              autocomplete="off"
+              spellcheck="false"
+            />
+          </label>
+          <span id="answer-result-count" class="result-count"></span>
+        </div>
+        <div id="answer-list" class="answer-list"></div>
+        <nav id="answer-pagination" class="pagination" aria-label="Answer result pages"></nav>
       </section>
 
       <section id="winners" class="winners-section" data-view-panel="winners" role="tabpanel" aria-labelledby="winners-title" hidden>
@@ -194,6 +257,110 @@
         <p id="winner-result-count" class="winner-result-count"></p>
         <div id="winner-days" class="winner-days"></div>
         <nav id="winner-pagination" class="pagination winner-pagination" aria-label="Winner result pages"></nav>
+      </section>
+
+      <section id="faq" class="faq-section" data-view-panel="faq" role="tabpanel" aria-labelledby="faq-title" hidden>
+        <div class="faq-section__heading">
+          <p class="section-kicker">Help &amp; campaign information</p>
+          <h2 id="faq-title">Frequently Asked Questions</h2>
+          <p>
+            The campaign answers below are adapted from the Nusuk app’s
+            <strong>Help → Support Center</strong> section. The unofficial-project notice comes first for clarity.
+          </p>
+        </div>
+
+        <div class="faq-list">
+          <details class="faq-item faq-item--notice" open>
+            <summary><span>Is this an official Nusuk website?</span><span class="faq-item__icon" aria-hidden="true"></span></summary>
+            <div class="faq-item__answer">
+              <p>No. This is an unofficial, open-source community project created by <strong>Zaki Zarkasih Al Mustafa</strong>. It is not affiliated with Nusuk or the Saudi Ministry of Hajj and Umrah. The Nusuk app and its official terms always take precedence.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary><span>How do I get keys?</span><span class="faq-item__icon" aria-hidden="true"></span></summary>
+            <div class="faq-item__answer"><p>Nusuk provides one free key each day, and it expires at the end of that day. A successful game share also gives one key to you and one to the person who receives the share.</p></div>
+          </details>
+          <details class="faq-item">
+            <summary><span>How many keys can I use per day?</span><span class="faq-item__icon" aria-hidden="true"></span></summary>
+            <div class="faq-item__answer"><p>You can use one key per day to enter the challenge.</p></div>
+          </details>
+          <details class="faq-item">
+            <summary><span>When is the draw held?</span><span class="faq-item__icon" aria-hidden="true"></span></summary>
+            <div class="faq-item__answer"><p>A random draw is held once a day. Winners are announced through Nusuk’s official <strong>@MyNusuk</strong> accounts.</p></div>
+          </details>
+          <details class="faq-item">
+            <summary><span>What happens if I answer after the draw?</span><span class="faq-item__icon" aria-hidden="true"></span></summary>
+            <div class="faq-item__answer"><p>A correct answer submitted after a draw is not included in that draw; it moves automatically to the next draw shown in the app.</p></div>
+          </details>
+          <details class="faq-item">
+            <summary><span>Who is eligible to participate?</span><span class="faq-item__icon" aria-hidden="true"></span></summary>
+            <div class="faq-item__answer"><p>Participants must be at least 18. All nationalities may participate unless local law prohibits it. Participation also means accepting the official terms and complying with applicable laws.</p></div>
+          </details>
+          <details class="faq-item">
+            <summary><span>What are the prizes?</span><span class="faq-item__icon" aria-hidden="true"></span></summary>
+            <div class="faq-item__answer">
+              <p><strong>First prize:</strong> an Umrah trip for the winner and one chosen companion, including the Umrah visa, travel tickets, ten nights in Makkah and Madinah, transportation, and guidance under the official conditions. It cannot be transferred, exchanged, or redeemed for cash.</p>
+              <p><strong>Second prize:</strong> 20 cartons of Zamzam water. The winner may gift them, but delivery is limited to citizens and residents inside Saudi Arabia under the official conditions.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary><span>Can I choose an Umrah companion?</span><span class="faq-item__icon" aria-hidden="true"></span></summary>
+            <div class="faq-item__answer"><p>Yes. The Umrah winner may choose one companion, subject to the official competition terms.</p></div>
+          </details>
+          <details class="faq-item">
+            <summary><span>How will a winner be contacted?</span><span class="faq-item__icon" aria-hidden="true"></span></summary>
+            <div class="faq-item__answer"><p>Winners need a valid email address for the notification and prize coordination. If a winner cannot be reached within 30 days, the right to the prize is lost.</p></div>
+          </details>
+          <details class="faq-item">
+            <summary><span>Can the prize be transferred to someone else?</span><span class="faq-item__icon" aria-hidden="true"></span></summary>
+            <div class="faq-item__answer"><p>The Umrah prize is non-transferable and belongs only to the officially announced winner.</p></div>
+          </details>
+          <details class="faq-item">
+            <summary><span>Where can I see previous winners?</span><span class="faq-item__icon" aria-hidden="true"></span></summary>
+            <div class="faq-item__answer"><p>Use the Winners page in the Nusuk game, check the official <strong>@MyNusuk</strong> social accounts, or use this site’s Official Winners directory as a community index.</p></div>
+          </details>
+          <details class="faq-item">
+            <summary><span>How is competition data handled?</span><span class="faq-item__icon" aria-hidden="true"></span></summary>
+            <div class="faq-item__answer"><p>According to Nusuk Help, participant data is used for the competition, the draw, and contacting winners under the Ministry of Hajj and Umrah’s approved privacy policy. This unofficial site does not request or store your personal details.</p></div>
+          </details>
+          <details class="faq-item">
+            <summary><span>Is participation free?</span><span class="faq-item__icon" aria-hidden="true"></span></summary>
+            <div class="faq-item__answer"><p>Yes. Participation in the competition is free.</p></div>
+          </details>
+          <details class="faq-item">
+            <summary><span>What should I do if the Nusuk app has a technical problem?</span><span class="faq-item__icon" aria-hidden="true"></span></summary>
+            <div class="faq-item__answer"><p>For sign-in problems, error messages, or other app issues, contact official Nusuk technical support at <a href="tel:920002814">920002814</a>.</p></div>
+          </details>
+          <details class="faq-item">
+            <summary><span>Can the same person win more than once?</span><span class="faq-item__icon" aria-hidden="true"></span></summary>
+            <div class="faq-item__answer"><p>No. A person may win only once, and their draw entry closes after the win is recorded.</p></div>
+          </details>
+          <details class="faq-item">
+            <summary><span>Can the organizer change or cancel the competition or prizes?</span><span class="faq-item__icon" aria-hidden="true"></span></summary>
+            <div class="faq-item__answer"><p>Yes. The organizer may make changes or cancel the competition or prizes when emergency or regulatory circumstances require it.</p></div>
+          </details>
+          <details class="faq-item">
+            <summary><span>How are prize confirmation and trip dates arranged?</span><span class="faq-item__icon" aria-hidden="true"></span></summary>
+            <div class="faq-item__answer"><p>The relevant team contacts the winner to confirm the prize and arrange the trip date based on availability and the approved terms.</p></div>
+          </details>
+          <details class="faq-item">
+            <summary><span>Can a prize be shared with family?</span><span class="faq-item__icon" aria-hidden="true"></span></summary>
+            <div class="faq-item__answer"><p>It depends on the prize. The Umrah trip is for the winner and one chosen companion and cannot be transferred. Zamzam water may be gifted, provided delivery remains within Saudi Arabia to eligible citizens or residents.</p></div>
+          </details>
+        </div>
+
+        <aside class="faq-support" aria-label="Official customer care contacts">
+          <div>
+            <p class="section-kicker">Official customer care</p>
+            <h3>We’re here for you</h3>
+          </div>
+          <ul>
+            <li><span>Inside Saudi Arabia · 24/7</span><a href="tel:1966">1966</a></li>
+            <li><span>Outside Saudi Arabia · 24/7</span><a href="tel:+966920002814">+966 9200 02814</a></li>
+            <li><span>Email</span><a href="mailto:care@haj.gov.sa">care@haj.gov.sa</a></li>
+            <li><span>X &amp; Facebook</span><strong>@mohu_care</strong></li>
+          </ul>
+        </aside>
       </section>
 
       <section class="how-it-works" aria-labelledby="how-title">
