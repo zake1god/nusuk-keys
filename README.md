@@ -2,7 +2,7 @@
 
 An unofficial community website for searching and copying Nusuk Keys, browsing community-verified challenge answers, reading campaign help, and checking official winners. Keys are extracted from public comments with the `NG-[A-Za-z0-9]{8}` pattern and deduplicated before publishing.
 
-> **Unofficial.** This project was created by **Zaki Zarkasih Al Mustafa** and is not affiliated with Nusuk or the Saudi Ministry of Hajj and Umrah. The website does not request or store personal data, usernames, or comment text.
+> **Unofficial.** This project was created by **Zake** and is not affiliated with Nusuk or the Saudi Ministry of Hajj and Umrah. The website does not request or store personal data, usernames, or comment text.
 
 ## Live website
 
@@ -61,7 +61,7 @@ There is no build process or dependency. Open `index.html` directly or serve the
 
 ## Support
 
-If this project helps you, support **Zaki Zarkasih Al Mustafa** through [SociaBuzz](https://sociabuzz.com/zakezrk/tribe) or [Ko-fi](https://ko-fi.com/zake).
+If this project helps you, support **Zake** through [SociaBuzz](https://sociabuzz.com/zakezrk/tribe) or [Ko-fi](https://ko-fi.com/zake).
 
 ## License
 
