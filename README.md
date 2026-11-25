@@ -16,6 +16,7 @@ https://zake1god.github.io/nusuk-keys/
 - Five key cards per row on desktop, with responsive layouts for smaller screens.
 - Switch between **All Nusuk Keys** and **Official Winners** without scrolling through both directories.
 - A searchable official winner directory covering the first 24 published daily results.
+- Winner pagination with no more than five daily result cards per page.
 - Two winner filters: 24 Umrah winners and 240 Zamzam winners.
 - Country flags and Latin transliterations for Arabic-script Umrah winner names.
 - A clear notice that the complete campaign runs for 50 days.

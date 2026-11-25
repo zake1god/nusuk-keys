@@ -1,6 +1,7 @@
 const NUSUK_SUBMIT_URL = "https://nusuk.go.link/winners";
 const KEY_PATTERN = /^NG-[A-Za-z0-9]{8}$/;
 const ITEMS_PER_PAGE = 50;
+const WINNER_ITEMS_PER_PAGE = 5;
 
 const allKeys = [
   ...new Set(
@@ -34,6 +35,7 @@ const pagination = document.querySelector("#pagination");
 const winnerDays = document.querySelector("#winner-days");
 const winnerSearch = document.querySelector("#winner-search");
 const winnerResultCount = document.querySelector("#winner-result-count");
+const winnerPagination = document.querySelector("#winner-pagination");
 const winnerTabs = [...document.querySelectorAll("[data-winner-filter]")];
 const directoryMenu = document.querySelector(".content-menu");
 const viewButtons = [...document.querySelectorAll("[data-view]")];
@@ -44,6 +46,7 @@ const initialPage = Number.parseInt(new URLSearchParams(window.location.search).
 let filteredKeys = allKeys;
 let currentPage = Number.isFinite(initialPage) && initialPage > 0 ? initialPage : 1;
 let winnerFilter = "all";
+let currentWinnerPage = 1;
 let toastTimer;
 
 function showToast(message) {
@@ -106,14 +109,14 @@ function createKeyCard(value, index) {
   return article;
 }
 
-function getPaginationItems(totalPages) {
+function getPaginationItems(totalPages, selectedPage) {
   if (totalPages <= 7) {
     return Array.from({ length: totalPages }, (_, index) => index + 1);
   }
 
-  const pages = new Set([1, totalPages, currentPage]);
+  const pages = new Set([1, totalPages, selectedPage]);
   for (let offset = -2; offset <= 2; offset += 1) {
-    const page = currentPage + offset;
+    const page = selectedPage + offset;
     if (page > 1 && page < totalPages) pages.add(page);
   }
 
@@ -164,7 +167,7 @@ function renderPagination(totalPages) {
     createPageButton("Previous", currentPage - 1, { disabled: currentPage === 1 }),
   );
 
-  getPaginationItems(totalPages).forEach((item) => {
+  getPaginationItems(totalPages, currentPage).forEach((item) => {
     if (item === "ellipsis") {
       const ellipsis = document.createElement("span");
       ellipsis.className = "pagination__ellipsis";
@@ -294,24 +297,95 @@ function dayMatchesWinnerSearch(day, query) {
   return values.some((value) => String(value).toLocaleLowerCase().includes(query));
 }
 
-function renderWinners() {
+function createWinnerPageButton(label, page, { current = false, disabled = false } = {}) {
+  const button = document.createElement("button");
+  button.className = "pagination__button";
+  button.type = "button";
+  button.textContent = label;
+  button.disabled = disabled;
+  button.setAttribute(
+    "aria-label",
+    label === "Previous" || label === "Next" ? `${label} winner page` : `Go to winner page ${page}`,
+  );
+
+  if (current) {
+    button.classList.add("is-current");
+    button.setAttribute("aria-current", "page");
+  }
+
+  if (!disabled && !current) {
+    button.addEventListener("click", () => {
+      currentWinnerPage = page;
+      renderWinners({ scroll: true });
+    });
+  }
+
+  return button;
+}
+
+function renderWinnerPagination(totalPages) {
+  winnerPagination.replaceChildren();
+  if (totalPages <= 1) {
+    winnerPagination.hidden = true;
+    return;
+  }
+
+  winnerPagination.hidden = false;
+  winnerPagination.appendChild(
+    createWinnerPageButton("Previous", currentWinnerPage - 1, {
+      disabled: currentWinnerPage === 1,
+    }),
+  );
+
+  getPaginationItems(totalPages, currentWinnerPage).forEach((item) => {
+    if (item === "ellipsis") {
+      const ellipsis = document.createElement("span");
+      ellipsis.className = "pagination__ellipsis";
+      ellipsis.textContent = "…";
+      ellipsis.setAttribute("aria-hidden", "true");
+      winnerPagination.appendChild(ellipsis);
+      return;
+    }
+
+    winnerPagination.appendChild(
+      createWinnerPageButton(String(item), item, { current: item === currentWinnerPage }),
+    );
+  });
+
+  winnerPagination.appendChild(
+    createWinnerPageButton("Next", currentWinnerPage + 1, {
+      disabled: currentWinnerPage === totalPages,
+    }),
+  );
+}
+
+function renderWinners({ scroll = false } = {}) {
   const query = winnerSearch.value.trim().toLocaleLowerCase();
   const matchingDays = officialWinnerDays.filter((day) => dayMatchesWinnerSearch(day, query));
+  const totalPages = Math.max(1, Math.ceil(matchingDays.length / WINNER_ITEMS_PER_PAGE));
+  currentWinnerPage = Math.min(Math.max(1, currentWinnerPage), totalPages);
+  const startIndex = (currentWinnerPage - 1) * WINNER_ITEMS_PER_PAGE;
+  const visibleDays = matchingDays.slice(startIndex, startIndex + WINNER_ITEMS_PER_PAGE);
   winnerDays.replaceChildren();
 
-  if (matchingDays.length === 0) {
+  if (visibleDays.length === 0) {
     const emptyState = document.createElement("p");
     emptyState.className = "empty-state";
     emptyState.textContent = "No published winner matches this search.";
     winnerDays.appendChild(emptyState);
   } else {
     const fragment = document.createDocumentFragment();
-    matchingDays.forEach((day) => fragment.appendChild(createWinnerDayCard(day)));
+    visibleDays.forEach((day) => fragment.appendChild(createWinnerDayCard(day)));
     winnerDays.appendChild(fragment);
   }
 
+  const firstResult = matchingDays.length === 0 ? 0 : startIndex + 1;
+  const lastResult = Math.min(startIndex + WINNER_ITEMS_PER_PAGE, matchingDays.length);
   const label = matchingDays.length === 1 ? "daily result" : "daily results";
-  winnerResultCount.textContent = `${matchingDays.length} ${label} shown · Official results through November 24, 2026`;
+  winnerResultCount.textContent = `${firstResult}–${lastResult} of ${matchingDays.length} ${label} · Official results through November 24, 2026`;
+  renderWinnerPagination(matchingDays.length === 0 ? 0 : totalPages);
+
+  if (scroll) document.querySelector("#winners").scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 function setDirectoryView(view, { updateHash = false, scroll = false } = {}) {
@@ -345,11 +419,15 @@ searchInput.addEventListener("input", () => {
   renderKeys({ updateUrl: true });
 });
 
-winnerSearch.addEventListener("input", renderWinners);
+winnerSearch.addEventListener("input", () => {
+  currentWinnerPage = 1;
+  renderWinners();
+});
 
 winnerTabs.forEach((tab) => {
   tab.addEventListener("click", () => {
     winnerFilter = tab.dataset.winnerFilter;
+    currentWinnerPage = 1;
     winnerTabs.forEach((item) => item.classList.toggle("is-active", item === tab));
     renderWinners();
   });
