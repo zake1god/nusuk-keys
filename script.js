@@ -30,6 +30,7 @@ const COUNTRY_CODES = Object.freeze({
   Indonesia: "id",
   Jordan: "jo",
   Morocco: "ma",
+  Nigeria: "ng",
   Pakistan: "pk",
   Senegal: "sn",
   Syria: "sy",

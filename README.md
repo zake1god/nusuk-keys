@@ -21,18 +21,19 @@ https://zake1god.github.io/nusuk-keys/
 - Official customer care contacts shown in the app, including phone, email, and social support channels.
 - A searchable official winner directory covering the first 25 published daily results.
 - Winner pagination with no more than five daily result cards per page.
-- Two winner filters: 24 Umrah winners and 250 Zamzam winners; the November 25 Umrah result is still pending.
+- Two winner filters: 25 Umrah winners and 250 Zamzam winners.
 - Country flags and Latin transliterations for Arabic-script Umrah winner names.
 - A clear notice that the complete campaign runs for 50 days.
 - SociaBuzz and Ko-fi support links in both the header and page body.
 - A visible link back to this public repository for transparency.
 
-Winner names are preserved as published by Nusuk. The current directory contains 274 names announced through November 25, 2026.
+Winner names are preserved as published by Nusuk. The current directory contains 275 names announced through November 25, 2026.
 
 ## Initial sources
 
 - Official `@mynusuk` key post: https://www.instagram.com/p/DgK0xgAl-e5/?hl=en
-- Latest official winner announcement: https://www.instagram.com/p/DgLEFNQFwjm/?hl=en
+- Latest official Zamzam announcement: https://www.instagram.com/p/DgLEFNQFwjm/?hl=en
+- Official Umrah results: the Winners screen in the Nusuk app.
 - Official `@mynusuk` Instagram account and winner announcements: https://www.instagram.com/mynusuk/?hl=en
 - Application link from the caption: https://nusuk.go.link/winners
 - Official Nusuk website: https://www.nusuk.sa/

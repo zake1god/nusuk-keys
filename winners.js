@@ -5,11 +5,10 @@ window.NUSUK_WINNERS = Object.freeze([
   {
     day: 25,
     date: "Wednesday 25 November",
-    umrah: null,
-    umrahStatus: "Pending official announcement",
+    umrah: ["ISMAIL MUSA IBRAHIM", "Nigeria"],
     zamzam: [
       "عبدالله حسني محمود",
-      "حنان حمد بن سالم العمري",
+      "حنان حمد بن سالم المري",
       "MOHAMMAD JEESHAN",
       "عاتق حامد فرحان الحربي",
       "الوليد حمزه عبدالحميد ولي",
