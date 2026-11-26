@@ -400,7 +400,8 @@ function setAnswerCategory(categoryId, { scroll = false } = {}) {
 function createWinnerDayCard(day) {
   const showUmrah = winnerFilter !== "zamzam";
   const showZamzam = winnerFilter !== "umrah";
-  const [officialName, country, latinName] = day.umrah;
+  const hasUmrahWinner = Array.isArray(day.umrah) && day.umrah.length >= 2;
+  const [officialName, country, latinName] = hasUmrahWinner ? day.umrah : ["", "", ""];
   const countryCode = COUNTRY_CODES[country];
   const flagMarkup = countryCode
     ? `<img class="winner-country__flag" src="https://flagcdn.com/w40/${countryCode}.png" width="20" height="15" alt="" loading="lazy" />`
@@ -412,7 +413,7 @@ function createWinnerDayCard(day) {
   const article = document.createElement("article");
   article.className = "winner-day-card";
 
-  const umrahSection = showUmrah
+  const umrahSection = showUmrah && hasUmrahWinner
     ? `
       <section class="winner-day-card__umrah" aria-label="Umrah winner">
         <p class="winner-card-label">Umrah winner <span>No. ${day.day}</span></p>
@@ -421,7 +422,15 @@ function createWinnerDayCard(day) {
         <p class="winner-country">${flagMarkup}${escapeHtml(country)}</p>
       </section>
     `
-    : "";
+    : showUmrah
+      ? `
+        <section class="winner-day-card__umrah" aria-label="Umrah winner status">
+          <p class="winner-card-label">Umrah winner <span>No. ${day.day}</span></p>
+          <h3>${escapeHtml(day.umrahStatus || "Pending official announcement")}</h3>
+          <p class="winner-country">Not yet published by @mynusuk.</p>
+        </section>
+      `
+      : "";
 
   const zamzamSection = showZamzam
     ? `
@@ -443,7 +452,7 @@ function createWinnerDayCard(day) {
       ${umrahSection}
       ${zamzamSection}
     </div>
-    <a class="winner-day-card__source" href="https://www.instagram.com/mynusuk/?hl=en" target="_blank" rel="noopener noreferrer">
+    <a class="winner-day-card__source" href="${escapeHtml(day.source || "https://www.instagram.com/mynusuk/?hl=en")}" target="_blank" rel="noopener noreferrer">
       Official source: @mynusuk ↗
     </a>
   `;
@@ -452,11 +461,15 @@ function createWinnerDayCard(day) {
 }
 
 function dayMatchesWinnerSearch(day, query) {
-  if (!query) return true;
+  const hasUmrahWinner = Array.isArray(day.umrah) && day.umrah.length >= 2;
+  const hasZamzamWinners = Array.isArray(day.zamzam) && day.zamzam.length > 0;
+  if (winnerFilter === "umrah" && !hasUmrahWinner) return false;
+  if (winnerFilter === "zamzam" && !hasZamzamWinners) return false;
+  if (!query) return hasUmrahWinner || hasZamzamWinners;
 
   const values = [day.day, day.date];
-  if (winnerFilter !== "zamzam") values.push(...day.umrah);
-  if (winnerFilter !== "umrah") values.push(...day.zamzam);
+  if (winnerFilter !== "zamzam" && hasUmrahWinner) values.push(...day.umrah);
+  if (winnerFilter !== "umrah" && hasZamzamWinners) values.push(...day.zamzam);
   return values.some((value) => String(value).toLocaleLowerCase().includes(query));
 }
 
@@ -545,7 +558,7 @@ function renderWinners({ scroll = false } = {}) {
   const firstResult = matchingDays.length === 0 ? 0 : startIndex + 1;
   const lastResult = Math.min(startIndex + WINNER_ITEMS_PER_PAGE, matchingDays.length);
   const label = matchingDays.length === 1 ? "daily result" : "daily results";
-  winnerResultCount.textContent = `${firstResult}–${lastResult} of ${matchingDays.length} ${label} · Official results through November 24, 2026`;
+  winnerResultCount.textContent = `${firstResult}–${lastResult} of ${matchingDays.length} ${label} · Official results through November 25, 2026`;
   renderWinnerPagination(matchingDays.length === 0 ? 0 : totalPages);
 
   if (scroll) document.querySelector("#winners").scrollIntoView({ behavior: "smooth", block: "start" });

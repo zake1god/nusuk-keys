@@ -19,24 +19,25 @@ https://zake1god.github.io/nusuk-keys/
 - Search questions and answers within the selected category, with 20 answer cards per page and one-click answer copying.
 - Read an informative FAQ adapted from the Nusuk app’s Help → Support Center section, beginning with a clear unofficial-project notice.
 - Official customer care contacts shown in the app, including phone, email, and social support channels.
-- A searchable official winner directory covering the first 24 published daily results.
+- A searchable official winner directory covering the first 25 published daily results.
 - Winner pagination with no more than five daily result cards per page.
-- Two winner filters: 24 Umrah winners and 240 Zamzam winners.
+- Two winner filters: 24 Umrah winners and 250 Zamzam winners; the November 25 Umrah result is still pending.
 - Country flags and Latin transliterations for Arabic-script Umrah winner names.
 - A clear notice that the complete campaign runs for 50 days.
 - SociaBuzz and Ko-fi support links in both the header and page body.
 - A visible link back to this public repository for transparency.
 
-Winner names are preserved as published by Nusuk. The current directory contains 264 names announced through November 24, 2026.
+Winner names are preserved as published by Nusuk. The current directory contains 274 names announced through November 25, 2026.
 
 ## Initial sources
 
-- Official `@mynusuk` Instagram post: https://www.instagram.com/p/DgIDDFmFyNy/?hl=en
+- Official `@mynusuk` key post: https://www.instagram.com/p/DgK0xgAl-e5/?hl=en
+- Latest official winner announcement: https://www.instagram.com/p/DgLEFNQFwjm/?hl=en
 - Official `@mynusuk` Instagram account and winner announcements: https://www.instagram.com/mynusuk/?hl=en
 - Application link from the caption: https://nusuk.go.link/winners
 - Official Nusuk website: https://www.nusuk.sa/
 
-The November 25, 2026 extraction scanned **12,253 top-level comments** and **4,317 replies** available through Instagram pagination. It produced **10,303 unique keys** using case-sensitive deduplication. No usernames or other comment text are published.
+The November 26, 2026 extraction scanned **5,123 top-level comments** available through Instagram pagination. It produced **5,359 unique keys** using case-sensitive deduplication. Instagram reported a larger displayed count that includes replies and content not returned by the top-level iterator. No usernames or other comment text are published.
 
 ## Updating keys
 
