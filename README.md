@@ -19,26 +19,26 @@ https://zake1god.github.io/nusuk-keys/
 - Search questions and answers within the selected category, with 20 answer cards per page and one-click answer copying.
 - Read an informative FAQ adapted from the Nusuk app’s Help → Support Center section, beginning with a clear unofficial-project notice.
 - Official customer care contacts shown in the app, including phone, email, and social support channels.
-- A searchable official winner directory covering the first 25 published daily results.
+- A searchable official winner directory covering the first 26 published daily results.
 - Winner pagination with no more than five daily result cards per page.
-- Two winner filters: 25 Umrah winners and 250 Zamzam winners.
+- Filter the directory by prize to see 26 Umrah winners or 260 Zamzam winners.
 - Country flags and Latin transliterations for Arabic-script Umrah winner names.
 - A clear notice that the complete campaign runs for 50 days.
 - SociaBuzz and Ko-fi support links in both the header and page body.
 - A visible link back to this public repository for transparency.
 
-Winner names are preserved as published by Nusuk. The current directory contains 275 names announced through November 25, 2026.
+Winner names are preserved as published by Nusuk. The current directory contains 286 names announced through November 26, 2026.
 
 ## Initial sources
 
-- Official `@mynusuk` key post: https://www.instagram.com/p/DgK0xgAl-e5/?hl=en
-- Latest official Zamzam announcement: https://www.instagram.com/p/DgLEFNQFwjm/?hl=en
+- November 26 Umrah announcement and source of the current keys. [Official Instagram post](https://www.instagram.com/p/DgNOQ_3F-vf/?hl=en)
+- November 26 Zamzam winners. [Official Instagram announcement](https://www.instagram.com/p/DgNxLAiFyK5/?hl=en)
 - Official Umrah results: the Winners screen in the Nusuk app.
 - Official `@mynusuk` Instagram account and winner announcements: https://www.instagram.com/mynusuk/?hl=en
 - Application link from the caption: https://nusuk.go.link/winners
 - Official Nusuk website: https://www.nusuk.sa/
 
-The November 26, 2026 extraction scanned **5,123 top-level comments** available through Instagram pagination. It produced **5,359 unique keys** using case-sensitive deduplication. Instagram reported a larger displayed count that includes replies and content not returned by the top-level iterator. No usernames or other comment text are published.
+The November 27, 2026 directory contains **5,845 unique keys** from the November 26 Umrah post. The latest scan read **6,510 top-level comments** and found **5,841 unique keys**. Earlier comment captures from the same post supplied 4 additional keys. Deduplication preserves letter case.
 
 ## Updating keys
 

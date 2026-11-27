@@ -444,6 +444,12 @@ function createWinnerDayCard(day) {
     `
     : "";
 
+  const sourceLinks = day.sources
+    ? Object.entries(day.sources)
+        .filter(([prize]) => winnerFilter === "all" || winnerFilter === prize)
+        .map(([prize, url]) => [prize === "umrah" ? "Umrah announcement" : "Zamzam announcement", url])
+    : [["Official source", day.source || "https://www.instagram.com/mynusuk/?hl=en"]];
+
   article.innerHTML = `
     <header class="winner-day-card__header">
       <span>Day ${day.day}</span>
@@ -453,9 +459,11 @@ function createWinnerDayCard(day) {
       ${umrahSection}
       ${zamzamSection}
     </div>
-    <a class="winner-day-card__source" href="${escapeHtml(day.source || "https://www.instagram.com/mynusuk/?hl=en")}" target="_blank" rel="noopener noreferrer">
-      Official source: @mynusuk ↗
-    </a>
+    ${sourceLinks.map(([label, url]) => `
+      <a class="winner-day-card__source" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">
+        ${label} · @mynusuk ↗
+      </a>
+    `).join("")}
   `;
 
   return article;
@@ -559,7 +567,7 @@ function renderWinners({ scroll = false } = {}) {
   const firstResult = matchingDays.length === 0 ? 0 : startIndex + 1;
   const lastResult = Math.min(startIndex + WINNER_ITEMS_PER_PAGE, matchingDays.length);
   const label = matchingDays.length === 1 ? "daily result" : "daily results";
-  winnerResultCount.textContent = `${firstResult}–${lastResult} of ${matchingDays.length} ${label} · Official results through November 25, 2026`;
+  winnerResultCount.textContent = `${firstResult}–${lastResult} of ${matchingDays.length} ${label} · Official results through November 26, 2026`;
   renderWinnerPagination(matchingDays.length === 0 ? 0 : totalPages);
 
   if (scroll) document.querySelector("#winners").scrollIntoView({ behavior: "smooth", block: "start" });
