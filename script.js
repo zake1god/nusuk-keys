@@ -567,7 +567,7 @@ function renderWinners({ scroll = false } = {}) {
   const firstResult = matchingDays.length === 0 ? 0 : startIndex + 1;
   const lastResult = Math.min(startIndex + WINNER_ITEMS_PER_PAGE, matchingDays.length);
   const label = matchingDays.length === 1 ? "daily result" : "daily results";
-  winnerResultCount.textContent = `${firstResult}–${lastResult} of ${matchingDays.length} ${label} · Official results through November 26, 2026`;
+  winnerResultCount.textContent = `${firstResult}–${lastResult} of ${matchingDays.length} ${label} · Official results through November 27, 2026`;
   renderWinnerPagination(matchingDays.length === 0 ? 0 : totalPages);
 
   if (scroll) document.querySelector("#winners").scrollIntoView({ behavior: "smooth", block: "start" });

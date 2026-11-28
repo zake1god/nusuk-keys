@@ -1,7 +1,28 @@
-// Official Nusuk winner announcements published through November 26, 2026.
+// Official Nusuk winner announcements published through November 27, 2026.
 // Names are preserved as published by @mynusuk. A third Umrah field, when
 // present, is a Latin transliteration of an official Arabic-script name.
 window.NUSUK_WINNERS = Object.freeze([
+  {
+    day: 27,
+    date: "Friday 27 November",
+    umrah: ["نجاني صالح زكي أحمد", "Egypt", "Najani Saleh Zaki Ahmed"],
+    zamzam: [
+      "زينب عتيق سعد الزبون",
+      "عبدالله السيد زناتي",
+      "MURTZA GAUSI SHEKH",
+      "إبتسام دحيم ناصر العتيبي",
+      "MAZHAR KHAN",
+      "سلطان عبدالله سعيد الدلبحي",
+      "منصور حجاب شمروخ العتيبي",
+      "RAMZAN KHAN MOMIN",
+      "NAFISA AFGHANI YUSUFI",
+      "محمد مجدي عفيفي",
+    ],
+    sources: {
+      umrah: "https://www.instagram.com/p/DgPx8UvIKOu/?hl=en",
+      zamzam: "https://www.instagram.com/p/DgQPkW9DKsB/?hl=en",
+    },
+  },
   {
     day: 26,
     date: "Thursday 26 November",
